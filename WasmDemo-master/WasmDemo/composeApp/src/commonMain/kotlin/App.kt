@@ -24,21 +24,6 @@ import wasmdemo.composeapp.generated.resources.elisa
 fun App() {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
-        val bookList = listOf(
-            DummyBook(1, "Harry Potter", 599.99),
-            DummyBook(2, "Harry Potter", 1299.99),
-            DummyBook(3, "Harry Potter", 99.99),
-            DummyBook(1, "Harry Potter", 599.99),
-            DummyBook(2, "Harry Potter", 1299.99),
-            DummyBook(3, "Harry Potter", 99.99),
-            DummyBook(1, "Harry Potter", 599.99),
-            DummyBook(2, "Harry Potter", 1299.99),
-            DummyBook(3, "Harry Potter", 99.99),
-            // Add more items as needed
-        )
-        val categoryList = listOf(
-            BookCategory(1, "OUR TOP-SELLING COLLECTION", "Detective Books", bookList, "View all Detective books ->"),
-            BookCategory(2, "OUR MOST-LOVED COLLECTION", "Educational Books", bookList, "View all Educational Books ->"),)
 
         // changed Column to LazyColumn for vertical scrolling of the page
         LazyColumn(Modifier.fillMaxHeight()) {
@@ -56,7 +41,7 @@ fun App() {
                     }
                 }
             }
-            items(categoryList) { product ->
+            items(Greeting().getBookCategories()) { product ->
                 BookUI().categoryItem(product)
             }
         }
