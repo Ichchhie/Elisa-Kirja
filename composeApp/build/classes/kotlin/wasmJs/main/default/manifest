@@ -1,0 +1,10 @@
+abi_version=1.8.0
+builtins_platform=WASM
+compiler_version=1.9.22
+depends=components.resources\:library components.ui-tooling-preview\:library org.jetbrains.compose.material\:material org.jetbrains.compose.material\:material-ripple org.jetbrains.compose.foundation\:foundation org.jetbrains.compose.animation\:animation org.jetbrains.compose.animation\:animation-core org.jetbrains.kotlinx\:kotlinx-coroutines-core org.jetbrains.kotlinx\:atomicfu org.jetbrains.compose.material\:material-icons-core org.jetbrains.compose.foundation\:foundation-layout org.jetbrains.compose.ui\:ui org.jetbrains.compose.runtime\:runtime-saveable kotlin org.jetbrains.compose.runtime\:runtime org.jetbrains.compose.ui\:ui-text org.jetbrains.compose.ui\:ui-graphics org.jetbrains.compose.ui\:ui-unit org.jetbrains.skiko\:skiko org.jetbrains.compose.ui\:ui-geometry org.jetbrains.compose.ui\:ui-util
+ir_signature_versions=1,2
+jsOutputName=composeApp
+metadata_version=1.4.1
+serializedIrFileFingerprints=pi5a6soq6744.187g1ojn9y99a f246zcd7ad0r.26dopm9p0qokq 3jqjpncid7100.ivpuyzildrej 64ca7yihha0d.2e1dk5ulph1xr 3g0tv4mcr2e1w.1vqf7euw4sj27 f8cd113kro6x.3d810ny1n71ll vxwzpxozt8j9.18zlqs1ufdrc1 l6vgp94k9m10.2apb4pl9kzt21 31qpz5nn36j3f.3p2pl01kfycw4 2lito99k4zboo.2ornio5sa49so
+serializedKlibFingerprint=3fkkr9d26v368.10wd0s1wc9jy7
+unique_name=WasmDemo\:composeApp
