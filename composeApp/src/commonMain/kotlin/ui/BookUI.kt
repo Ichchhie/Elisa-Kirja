@@ -27,6 +27,7 @@ import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.book
 import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
+import ui.AppStyles
 
 class BookUI {
 
@@ -66,15 +67,15 @@ class BookUI {
                     modifier = Modifier
                         .padding(top = 12.dp),
                     text = product.name,
-                    fontWeight = FontWeight.Bold
+                    style = AppStyles.h5Style
                 )
-                Text(text = product.author, fontSize = 15.sp)
+                Text(text = product.author, style = AppStyles.bodyStyle)
                 Row {
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = Color.Blue)
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = Color.Blue)
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = Color.Blue)
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = Color.Blue)
-                    Icon(imageVector = Icons.Outlined.Star, contentDescription = "Rating", tint = Color.Blue)
+                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
+                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
+                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
+                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
+                    Icon(imageVector = Icons.Outlined.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
                 }
                 Row(
                     modifier = Modifier
@@ -105,7 +106,7 @@ class BookUI {
             Spacer(Modifier.height(24.dp))
             Text(category.categoryDesc)
             Spacer(Modifier.height(12.dp))
-            Text(category.categoryName, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text(category.categoryName, style = AppStyles.headingStyle)
             Spacer(Modifier.height(12.dp))
             LazyRow() {
                 items(category.books) { product ->
@@ -117,7 +118,7 @@ class BookUI {
             }
         }
         Column(Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp), horizontalAlignment = Alignment.End) {
-            Text(category.viewAllText, color = Color(0xFF6200EE), textAlign = TextAlign.End)
+            Text(category.viewAllText, color = AppStyles.primaryButtonColor, textAlign = TextAlign.End)
         }
     }
 }

@@ -1,5 +1,4 @@
-"added this for test again
-"This is a Kotlin Multiplatform project targeting Android, iOS, Web.
+"This is a Kotlin Multiplatform project targeting Android, iOS, Web."
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
