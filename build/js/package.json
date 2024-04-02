@@ -5,6 +5,7 @@
   "workspaces": [
     "packages/composeApp",
     "packages/composeApp-test",
+    "packages_imported/ktor-ktor-client-ktor-client-core-wasm-js/3.0.0-wasm2",
     "packages_imported/skiko-wasm-js/0.7.93",
     "packages_imported/skiko-js-wasm-runtime/0.7.93",
     "packages_imported/components-resources-wasmJs/1.6.0",

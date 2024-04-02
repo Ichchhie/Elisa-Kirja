@@ -1,9 +1,15 @@
 package ui
 
-import models.BookCategory
-import models.Books
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
@@ -21,6 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import models.BookCategory
+import models.Books
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import wasmdemo.composeapp.generated.resources.Res
@@ -34,6 +42,7 @@ class BookUI {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     fun bookItem(product: Books, onItemClick: (Books) -> Unit) {
+
         // Detect click and invoke the onItemClick lambda
         Row(
             modifier = Modifier
@@ -54,7 +63,7 @@ class BookUI {
                 ) {
                     Image(
                         painter = painterResource(Res.drawable.book),
-                        contentDescription = "${product.name} available",
+                        contentDescription = "${product.title} available",
                         modifier = Modifier
                             .size(20.dp) // size of the image
                             .padding(30.dp),
@@ -65,10 +74,12 @@ class BookUI {
                 Text(
                     modifier = Modifier
                         .padding(top = 12.dp),
-                    text = product.name,
+                    text = product.title,
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = product.author, fontSize = 15.sp)
+
+                //Text(text = product.authors, fontSize = 15.sp)
+                Text(text = "hello", fontSize = 15.sp)
                 Row {
                     Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = Color.Blue)
                     Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = Color.Blue)

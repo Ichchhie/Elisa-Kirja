@@ -12,23 +12,23 @@ class Greeting {
 
     fun getBooks(): List<Books> {
         val bookList = listOf(
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            Books("Simple Way of Piece life", "Simple Way of Piece life", "Armor Ramsey"),
-            // Add more items as needed
+            //Books(1, "Simple Way of Piece life", authors = listOf()),
+            Books(1, "Simple Way of Piece life", "Armor Ramsey"),
+            Books(1, "Simple Way of Piece life", "Armor Ramsey"),
+            Books(1, "Simple Way of Piece life", "Armor Ramsey")
         )
         return bookList
     }
 
     fun getBookCategories(): List<BookCategory> {
         val categoryList = listOf(
-            BookCategory(1, "OUR TOP-SELLING COLLECTION", "Detective Books", getBooks(), "View all Detective books ->"),
+            BookCategory(
+                1,
+                "OUR TOP-SELLING COLLECTION",
+                "Detective Books",
+                getBooks(),
+                "View all Detective books ->"
+            ),
             BookCategory(
                 2,
                 "OUR MOST-LOVED COLLECTION",
