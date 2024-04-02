@@ -50,7 +50,6 @@ fun App() {
                            scope.launch{
                                //greeting = Greeting().greet()
                                greeting = GetBooks().RetrieveBooksFromAPI()
-
                             }
                             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                                 Image(painterResource(Res.drawable.elisa), null)
