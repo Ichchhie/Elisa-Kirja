@@ -23,12 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
 import models.BookCategory
@@ -40,7 +37,6 @@ import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.book
 import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
-import ui.AppStyles
 
 class BookUI {
 
@@ -100,11 +96,31 @@ class BookUI {
                 //Text(text = product.authors, fontSize = 15.sp)
                 Text(text = "hello", style = AppStyles.bodyStyle)
                 Row {
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
-                    Icon(imageVector = Icons.Outlined.Star, contentDescription = "Rating", tint = AppStyles.primaryButtonColor)
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Rating",
+                        tint = AppStyles.primaryButtonColor
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Rating",
+                        tint = AppStyles.primaryButtonColor
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Rating",
+                        tint = AppStyles.primaryButtonColor
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Rating",
+                        tint = AppStyles.primaryButtonColor
+                    )
+                    Icon(
+                        imageVector = Icons.Outlined.Star,
+                        contentDescription = "Rating",
+                        tint = AppStyles.primaryButtonColor
+                    )
                 }
                 Row(
                     modifier = Modifier
@@ -133,10 +149,6 @@ class BookUI {
     fun categoryItem(category: BookCategory) {
         val scope = rememberCoroutineScope()
         var bookContainer: BookContainer? = null
-        scope.launch {
-            //greeting = Greeting().greet()
-            bookContainer = GetBooks().retrieveBooksFromAPI()
-        }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(Modifier.height(24.dp))
             Text(category.categoryDesc)
@@ -145,6 +157,10 @@ class BookUI {
             Spacer(Modifier.height(12.dp))
             LazyRow() {
                 items(category.books) { product ->
+                    scope.launch {
+                        //greeting = Greeting().greet()
+                        bookContainer = GetBooks().retrieveBooksFromAPI(product.id)
+                    }
                     product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
                     bookItem(product = product, onItemClick = { selectedProduct ->
                         // Handle item click
@@ -153,8 +169,15 @@ class BookUI {
                 }
             }
         }
-        Column(Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp), horizontalAlignment = Alignment.End) {
-            Text(category.viewAllText, color = AppStyles.primaryButtonColor, textAlign = TextAlign.End)
+        Column(
+            Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(
+                category.viewAllText,
+                color = AppStyles.primaryButtonColor,
+                textAlign = TextAlign.End
+            )
         }
     }
 }

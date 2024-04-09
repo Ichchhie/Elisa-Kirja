@@ -5,15 +5,13 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import models.BookContainer
-import models.Books
 
 class GetBooks {
 
-    suspend fun retrieveBooksFromAPI(): BookContainer? {
+    suspend fun retrieveBooksFromAPI(id: String?): BookContainer? {
 
         val client: HttpClient by lazy {
             val config: HttpClientConfig<*>.() -> Unit = {
@@ -32,7 +30,7 @@ class GetBooks {
             HttpClient(config)
         }
 
-        val response = runCatching { client.get("https://kirja.elisa.fi/api/books/211203").body<BookContainer>() }
+        val response = runCatching { client.get("https://kirja.elisa.fi/api/books/$id").body<BookContainer>() }
         return response.getOrNull()
 
         /*
