@@ -27,15 +27,15 @@ import wasmdemo.composeapp.generated.resources.elisa
 @Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        var showContent by remember { mutableStateOf(true) }
 
         // changed Column to LazyColumn for vertical scrolling of the page
         LazyColumn(Modifier.fillMaxHeight()) {
             item {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Button(onClick = { showContent = !showContent }) {
-                        Text("What's Elisa? ")
-                    }
+//                    Button(onClick = { showContent = !showContent }) {
+//                        Text("What's Elisa? ")
+//                    }
                     AnimatedVisibility(showContent) {
                         val greeting = remember { Greeting().greet() }
                         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
