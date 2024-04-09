@@ -1,4 +1,3 @@
-//import io.ktor.client.engine.cio.*
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -29,27 +30,21 @@ import wasmdemo.composeapp.generated.resources.elisa
 @Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        var showContent by remember { mutableStateOf(true) }
 
         // changed Column to LazyColumn for vertical scrolling of the page
         LazyColumn(Modifier.fillMaxHeight()) {
             item {
-                Column(
-                    Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Button(onClick = { showContent = !showContent }) {
-                        Text("What's Elisa? ")
-                    }
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+//                    Button(onClick = { showContent = !showContent }) {
+//                        Text("What's Elisa? ")
+//                    }
                     AnimatedVisibility(showContent) {
                         val greeting = remember { Greeting().greet() }
-//                           scope.launch{
+//                        scope.launch{
 ////                               greeting = GetBooks().retrieveBooksFromAPI()
 //                            }
-                        Column(
-                            Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
+                        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(painterResource(Res.drawable.elisa), null)
 
                             Text("$greeting")
