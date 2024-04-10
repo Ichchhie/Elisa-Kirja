@@ -40,7 +40,7 @@ config.devServer = {
   "static": [
     "kotlin",
     "../../../../composeApp/build/processedResources/wasmJs/main",
-    "/Users/arshiasaleem/Desktop/capstone/Elisa-Kirja/composeApp"
+    "/Users/user/elisa/Elisa-Kirja/composeApp"
   ],
   "client": {
     "overlay": {
