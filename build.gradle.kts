@@ -9,8 +9,6 @@ plugins {
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.jetbrainsCompose) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
-    //kotlin("jvm") version "1.9.22"
-    //kotlin("plugin.serialization").version("1.9.10")
 
 }
 
