@@ -64,7 +64,7 @@ class BookUI {
                         .fillMaxSize(),
                 ) {
                     AsyncImage(
-                        model = product.coverThumbnailImage, // replace with working URL
+                        model = "https://api.codetabs.com/v1/proxy/?quest="+product.coverThumbnailImage, // replace with working URL
                         placeholder = painterResource(Res.drawable.book),
                         error = painterResource(Res.drawable.book),
                         fallback = painterResource(Res.drawable.book),
