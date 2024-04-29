@@ -30,7 +30,7 @@ class GetBooks {
             HttpClient(config)
         }
 
-        val response = runCatching { client.get("https://kirja.elisa.fi/api/books/$id").body<BookContainer>() }
+        val response = runCatching { client.get("https://api.codetabs.com/v1/proxy/?quest=https://kirja.elisa.fi/api/books/$id").body<BookContainer>() }
         return response.getOrNull()
 
         /*

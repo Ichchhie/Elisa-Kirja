@@ -1,10 +1,7 @@
 package models
 
-import androidx.compose.runtime.Immutable
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
-
 /* Static data */
 
 @Serializable

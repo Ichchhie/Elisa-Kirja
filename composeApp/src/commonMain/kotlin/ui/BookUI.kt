@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import coil3.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.launch
 import models.BookCategory
 import models.BookContainer
@@ -64,7 +65,7 @@ class BookUI {
                         .fillMaxSize(),
                 ) {
                     AsyncImage(
-                        model = product.coverThumbnailImage, // replace with working URL
+                        model = "https://api.codetabs.com/v1/proxy/?quest="+product.coverThumbnailImage, // replace with working URL
                         placeholder = painterResource(Res.drawable.book),
                         error = painterResource(Res.drawable.book),
                         fallback = painterResource(Res.drawable.book),
