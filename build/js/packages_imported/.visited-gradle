@@ -152,6 +152,15 @@
     "ee28ba4434d8ef239dcdfccb3c3b14d2": {
       "src": "/Users/wisdomkalu/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-network-core-wasm-js/3.0.0-alpha06/b95ee257843d5833380d094d9544dbd8e1f27078/coil-network-core-wasm-js-3.0.0-alpha06.klib",
       "target": "coil-network-core-wasm-js/3.0.0-alpha06"
+    },
+    "dbe02e5f765148aa94c8aaabf0d17873": {
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/cafe.adriel.voyager/voyager-navigator-wasm-js/1.1.0-alpha04/ddd430cdf092b0cfbf19b218bb6c16780fce9283/voyager-navigator-wasm-js-1.1.0-alpha04.klib"
+    },
+    "f2f71f85658ffdf7cb0f983dba3761dc": {
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/cafe.adriel.voyager/voyager-core-wasm-js/1.1.0-alpha04/354dda74abf60b07bc9c0c7f41068267bbfa22ae/voyager-core-wasm-js-1.1.0-alpha04.klib"
+    },
+    "4715e426e639e602146b21a902d663ee": {
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/com.benasher44/uuid-wasm-js/0.8.2/a8a9c7946accb66474de927b4485a3ee4dd28717/uuid-wasm-js-0.8.2.klib"
     }
   }
 }
