@@ -2,11 +2,20 @@ package models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-/* Static data */
-
 @Serializable
 data class BookContainer(
     val book: Books
+)
+@Serializable
+data class AllBooksContainer(
+    val record: AllBooksData
+)
+@Serializable
+data class AllBooksData(
+    val books: List<Books>,
+    val total: Int,
+    val totalEbooks: Int,
+    val totalAudioBooks: Int
 )
 
 @Serializable
