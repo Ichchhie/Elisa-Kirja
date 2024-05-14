@@ -1,7 +1,9 @@
 package ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -24,30 +26,52 @@ class BottomNavItem {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(
+                    start = 16.dp,
+                    top = 8.dp,
+                    end = 16.dp,
+                    bottom = 8.dp
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = { /* doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Localized description"
+            Spacer(modifier = Modifier.height(8.dp)) // Margin between items
+                IconButton(onClick = { /* doSomething() */ }) {
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "Localized description"
+                    )
+                }
+                Text(
+                    text = "Medium TopAppBar",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
+
+                Text(
+                    text = "Medium TopAppBar",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                IconButton(onClick = { /* doSomething() */ }) {
+                    Icon(
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = "Localized description"
+                    )
+                }
+                Text(
+                    text = "Medium TopAppBar",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = "Medium TopAppBar",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            Spacer(modifier = Modifier.height(8.dp)) // Margin between items
             }
 
-            Text(
-                text = "Medium TopAppBar",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            IconButton(onClick = { /* doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Favorite,
-                    contentDescription = "Localized description"
-                )
-            }
-        }
     }
 
 }
