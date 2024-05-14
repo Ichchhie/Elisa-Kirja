@@ -8,6 +8,7 @@
     "packages_imported/ktor-ktor-client-ktor-client-core-wasm-js/3.0.0-wasm2",
     "packages_imported/skiko-wasm-js/0.7.93",
     "packages_imported/skiko-js-wasm-runtime/0.7.93",
+    "packages_imported/Kotlin-DateTime-library-kotlinx-datetime-wasm-js/0.5.0",
     "packages_imported/components-resources-wasmJs/1.6.0",
     "packages_imported/coil-compose-wasm-js/3.0.0-alpha06",
     "packages_imported/coil-compose-core-wasm-js/3.0.0-alpha06",
