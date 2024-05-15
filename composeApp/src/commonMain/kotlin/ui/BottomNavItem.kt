@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -55,17 +57,18 @@ class BottomNavItem {
                     )
                 }
                  */
-                Text(
-                    style = TextStyle
-                        (
+                ClickableText(
+                    onClick = {/*Do nothing for now */},
+                    style = TextStyle(
                         fontSize = 20.sp, // Setting the font size to 20sp
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White
                     ),
-                    text = "Elisa Kirja",
+                    text = AnnotatedString("Elisa Kirja"),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.White
+                    overflow = TextOverflow.Ellipsis
                 )
+
 
             SearchBar(
                 query = text,
@@ -102,34 +105,50 @@ class BottomNavItem {
             Spacer(modifier = Modifier.width(22.dp)) // Horizontal space between SearchBar and Texts
             //Spacer(modifier = Modifier.height(22.dp)) // Margin between items
 
-                Text(
-                    text = "E-books",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.White,
-                )
-                Text(
-                    text = "Audio Books",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.White,
-                )
-            Text(
-                text = "Buy Books",
+
+
+            ClickableText(
+                onClick = { },
+                text = AnnotatedString("E-books"),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = Color.White,
+                style = TextStyle(
+                    fontSize = 15.sp, // Setting the font size to 20sp
+                    color = Color.White
+                )
             )
-            Text(
-                text = "Contact Us",
+            ClickableText(
+                onClick = { },
+                text = AnnotatedString("Audio Books"),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = Color.White,
+                style = TextStyle(
+                    fontSize = 15.sp, // Setting the font size to 20sp
+                    color = Color.White
+                )
+            )
+            ClickableText(
+                onClick = { },
+                text = AnnotatedString("Buy Books"),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = TextStyle(
+                    fontSize = 15.sp, // Setting the font size to 20sp
+                    color = Color.White
+                )
+            )
+            ClickableText(
+                onClick = { },
+                text = AnnotatedString("Contact Us"),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = TextStyle(
+                    fontSize = 15.sp, // Setting the font size to 20sp
+                    color = Color.White
+                )
             )
             Button(
                 onClick = { /* doSomething() */ },
-                modifier = Modifier
-                    .padding(horizontal = 8.dp),
                 colors = ButtonColors(
                     containerColor = Color.White,
                     contentColor = Color.Blue,
