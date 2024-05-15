@@ -5,6 +5,11 @@ depends=io.ktor\:ktor-client-content-negotiation io.coil-kt.coil3\:coil-network-
 ir_signature_versions=1,2
 jsOutputName=composeApp
 metadata_version=1.4.1
+<<<<<<< HEAD
 serializedIrFileFingerprints=227l4qxep8jmq.2q0qnnjk36lsx 2s9f5ompso7gk.gdyqqmx35b4o 2a5ejoowzyq2x.27ec869emuhrf 1a3payugwu5vp.2mqkxida5892m 1z4sow0vsd57n.2g9spkxq9jvug 7dq1gvf5rn5w.3jq9fygegdq08 26mftjg20yzw4.vgbmb0dt9gg3 2ntyubhgxscpq.26ay0l4lsz3n5 21qf1b8wuf4oc.32hb0mto6b29x 5eacxallxf5g.38qlw8uu35atp 21ztj82rbw4g9.3k641qx2u9s0n 4gcvarbd18fj.3run938g4kp6e 2kuw0kx3v6es8.3istgny7hpxea 12kcmtbv67wd2.unndlctw8wg7 124pq16op6bo8.26pkm21lxsl67
 serializedKlibFingerprint=1s513eh96bem0.34g82f6qq3u1a
+=======
+serializedIrFileFingerprints=3dcgiiz37z3zn.dncxkkekd60y 18s0gi6pjedlf.1go6w7j1088wf wdyykpc0i3dt.3a0vdshs089y8 s3s4zyqw5xve.v8y67lbhjke9 2vjuhsufkj4da.eyf5tyvlp8ek 1knji9n493808.e243y1is2xgm 2eed8gwu1w841.y12qm3ww2vw2 fdbx4bu2eri0.2j237p1ri7iic ml58nlfa06yb.3mkzhhj61t6gj 1uwdvz29akuz5.2a3t58829ec9i ag2ejbjvrxmd.3vsurh6tqozxy 1smo4v1tahrq9.3p7zwe0ohtxm6 1hhunadwtkutm.1h46ujql4wzcr 1m8c0l0elwcco.18f1o589zwdih 2sog0tbb7ai83.1hq1qww9moxfc
+serializedKlibFingerprint=14obmx2d8dfmk.1otczz5lq0wxw
+>>>>>>> 2023ce7ad9ea755ce9824ae314834d79388149e3
 unique_name=WasmDemo\:composeApp

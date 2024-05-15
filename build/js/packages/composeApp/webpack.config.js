@@ -40,7 +40,7 @@ config.devServer = {
   "static": [
     "kotlin",
     "../../../../composeApp/build/processedResources/wasmJs/main",
-    "/Users/wisdomkalu/Library/CloudStorage/OneDrive-LUTUniversity/Elisa/Elisa-Kirja/composeApp"
+    "/Users/user/elisa/Elisa-Kirja/composeApp"
   ],
   "client": {
     "overlay": {
