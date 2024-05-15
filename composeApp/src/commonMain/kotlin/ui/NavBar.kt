@@ -33,11 +33,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-class BottomNavItem {
+class NavBar {
 
     @Composable
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
-    fun showing() {
+    fun DisplayNavBar() {
         var text by remember { mutableStateOf("") }
         var active by remember { mutableStateOf(false) }
 

@@ -32,7 +32,7 @@ class HomeScreen: Screen {
         // changed Column to LazyColumn for vertical scrolling of the page
         LazyColumn(Modifier.fillMaxHeight()) {
             item {
-                BottomNavItem().showing()
+                NavBar().DisplayNavBar()
             }
             item {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
