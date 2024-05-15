@@ -43,7 +43,6 @@ import wasmdemo.composeapp.generated.resources.menu_book
 
 @OptIn(ExperimentalResourceApi::class)
 class HomeScreen: Screen {
-
     @Composable
     override fun Content() {
         var showContent by remember { mutableStateOf(true) }
@@ -51,6 +50,9 @@ class HomeScreen: Screen {
 
         // changed Column to LazyColumn for vertical scrolling of the page
         LazyColumn(Modifier.fillMaxHeight()) {
+            item {
+                BottomNavItem().showing()
+            }
             item {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 

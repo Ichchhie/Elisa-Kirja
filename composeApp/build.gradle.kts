@@ -53,6 +53,12 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
+            implementation(libs.androidx.material)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.lifecycle.viewModelCompose)
+            implementation(libs.androidx.core.ktx)
         }
         commonMain.dependencies {
             implementation(libs.ktor.client.core)
@@ -60,13 +66,15 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
+            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.coroutines.core)
+
 
             implementation("cafe.adriel.voyager:voyager-navigator:1.1.0-alpha04")
             //Image downloading
@@ -115,6 +123,9 @@ android {
 
 dependencies {
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.foundation.android)
 }
 
 
