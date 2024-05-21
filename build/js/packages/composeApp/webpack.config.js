@@ -13,7 +13,7 @@ let config = {
 
 // entry
 config.entry = {
-    main: [require('path').resolve(__dirname, "kotlin/composeApp.mjs")]
+    main: [require('path').resolve(__dirname, "kotlin\\composeApp.mjs")]
 };
 config.output = {
     filename: (chunkData) => {
@@ -39,8 +39,8 @@ config.devServer = {
   "open": true,
   "static": [
     "kotlin",
-    "../../../../composeApp/build/processedResources/wasmJs/main",
-    "/Users/user/elisa/Elisa-Kirja/composeApp"
+    "..\\..\\..\\..\\composeApp\\build\\processedResources\\wasmJs\\main",
+    "C:\\Users\\HP\\Desktop\\kirja_new\\Elisa-Kirja\\composeApp"
   ],
   "client": {
     "overlay": {
@@ -49,20 +49,6 @@ config.devServer = {
     }
   }
 };
-
-// Report progress to console
-// noinspection JSUnnecessarySemicolon
-;(function(config) {
-    const webpack = require('webpack');
-    const handler = (percentage, message, ...args) => {
-        const p = percentage * 100;
-        let msg = `${Math.trunc(p / 10)}${Math.trunc(p % 10)}% ${message} ${args.join(' ')}`;
-        msg = msg.replace(require('path').resolve(__dirname, "../.."), '');;
-        console.log(msg);
-    };
-
-    config.plugins.push(new webpack.ProgressPlugin(handler))
-})(config);
 
 // noinspection JSUnnecessarySemicolon
 ;(function(config) {
