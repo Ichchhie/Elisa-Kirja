@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -129,6 +130,7 @@ class BookUI {
         val navigator = LocalNavigator.currentOrThrow
         val bookContainers = remember { mutableStateOf<List<BookContainer?>>(emptyList()) }
         var isLoading by remember { mutableStateOf(true) }
+        val check = true
 
 
         // Fetch book data with LaunchedEffect
@@ -145,7 +147,7 @@ class BookUI {
 
                 delay(1000)
             }
-//            delay(1000)
+            //delay(1000)
             isLoading = false
         }
 
@@ -154,7 +156,8 @@ class BookUI {
             if (isLoading) {
 
                 repeat(1) {
-                    Shimmer().ShimmerPlaceholder()
+                    //Shimmer().ShimmerPlaceholder()
+                    LoadingEffect().LoadingAnimation()
                 }
             } else {
                 Spacer(Modifier.height(24.dp))
@@ -211,7 +214,10 @@ class BookUI {
         }
         if (isLoading) {
             repeat(1) {
-                Shimmer().ShimmerPlaceholder()
+                //Shimmer().ShimmerPlaceholder()
+                Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                    LoadingEffect().LoadingAnimation()
+                }
             }
         } else {
             if (bookContainers != null) {
@@ -234,7 +240,7 @@ class BookUI {
         }
     }
 
-  
+
 
 }
 
