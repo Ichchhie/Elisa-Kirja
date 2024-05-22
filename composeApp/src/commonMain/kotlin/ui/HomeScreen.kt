@@ -10,6 +10,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -55,6 +56,7 @@ class HomeScreen: Screen {
         var showContent by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.currentOrThrow
         var isLoading by remember { mutableStateOf(true) }
+        var check = true
 
         // Simulate loading delay
         LaunchedEffect(Unit) {
@@ -138,8 +140,14 @@ class HomeScreen: Screen {
             }
             if (showContent) {
                 if (isLoading) {
-                    items(1) { //  5 shimmer p  laceholders
-                        Shimmer().ShimmerPlaceholder()
+                    items(0) { //  5 shimmer placeholders
+                        //Shimmer().ShimmerPlaceholder()
+                        Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                            if (check) {
+                                LoadingEffect().LoadingAnimation()
+                            }
+                            check = false
+                        }
                     }
                 } else {
                     items(Greeting().getBookCategories()) { category ->
