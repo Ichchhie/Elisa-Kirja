@@ -43,7 +43,6 @@ class NavBar {
 
         Row(
             modifier = Modifier
-                .background(color = Color.Blue)
                 .fillMaxWidth()
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
