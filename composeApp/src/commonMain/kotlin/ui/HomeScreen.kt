@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
@@ -42,54 +44,70 @@ import wasmdemo.composeapp.generated.resources.elisa
 import wasmdemo.composeapp.generated.resources.menu_book
 
 @OptIn(ExperimentalResourceApi::class)
-class HomeScreen: Screen {
+class HomeScreen(private val isDarkTheme: Boolean, private val toggleTheme: () -> Unit) : Screen {
     @Composable
     override fun Content() {
+        val customColors = LocalCustomColors.current
         var showContent by remember { mutableStateOf(true) }
         val navigator = LocalNavigator.currentOrThrow
 
         // changed Column to LazyColumn for vertical scrolling of the page
-        LazyColumn(Modifier.fillMaxHeight()) {
-            item {
-                NavBar().DisplayNavBar()
-            }
+        LazyColumn(Modifier.fillMaxHeight().background(MaterialTheme.colors.background)) {
             item {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-
                     AnimatedVisibility(showContent) {
                         val greeting = remember { Greeting().greet() }
-                        Row(Modifier.fillMaxWidth().background(color = Color.Blue).padding(horizontal = 42.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Column(Modifier.weight(0.6F, fill = true).padding(42.dp), horizontalAlignment = Alignment.Start) {
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .background(color = customColors.secondaryBackground)
+                                .padding(horizontal = 42.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(
+                                Modifier
+                                    .weight(0.6F, fill = true)
+                                    .padding(42.dp),
+                                horizontalAlignment = Alignment.Start
+                            ) {
                                 Text(
                                     "$greeting",
                                     fontWeight = FontWeight.ExtraBold,
                                     fontSize = 64.sp,
-                                    color = Color.White,
+                                    color = MaterialTheme.colors.primary,
                                     lineHeight = 42.sp,
                                 )
                                 Spacer(Modifier.height(24.dp))
                                 Text(
                                     Greeting().elisaDescription(),
                                     fontSize = 24.sp,
-                                    color = Color.White,
+                                    color = MaterialTheme.colors.secondary,
                                     fontWeight = FontWeight.W500,
                                     lineHeight = 32.sp,
                                 )
                                 Spacer(Modifier.height(24.dp))
-                                Button(onClick = {  navigator.push(AllBooksScreen()) }, elevation =  ButtonDefaults.elevation(
-                                    defaultElevation = 10.dp,
-                                    pressedElevation = 15.dp,
-                                    disabledElevation = 0.dp
-                                ),
-                                    shape = RoundedCornerShape(20.dp), colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
-                                    Text(Greeting().browseBooks(),
+                                Button(
+                                    onClick = { navigator.push(AllBooksScreen()) },
+                                    elevation = ButtonDefaults.elevation(
+                                        defaultElevation = 10.dp,
+                                        pressedElevation = 15.dp,
+                                        disabledElevation = 0.dp
+                                    ),
+                                    shape = RoundedCornerShape(20.dp),
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                                ) {
+                                    Text(
+                                        Greeting().browseBooks(),
                                         Modifier.padding(end = 10.dp),
-                                        color = Color.Blue,
-                                        fontWeight = FontWeight.Bold)
+                                        color = MaterialTheme.colors.onBackground,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                     Image(
                                         painterResource(Res.drawable.arrow_right),
-                                        contentDescription ="browse button icon",
-                                        modifier = Modifier.size(24.dp))
+                                        contentDescription = "browse button icon",
+                                        modifier = Modifier.size(24.dp),
+                                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                                    )
                                 }
                             }
                             Column(Modifier.weight(0.4F, fill = true), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -104,10 +122,4 @@ class HomeScreen: Screen {
             }
         }
     }
-
 }
-
-
-
-
-

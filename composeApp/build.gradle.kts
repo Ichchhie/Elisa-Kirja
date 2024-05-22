@@ -126,6 +126,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.foundation.android)
+    implementation(libs.androidx.runtime.saveable.android)
 }
 
 

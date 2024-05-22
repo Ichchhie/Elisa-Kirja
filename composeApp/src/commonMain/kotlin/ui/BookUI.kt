@@ -2,6 +2,7 @@ package ui
 
 import API.GetBooks
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -48,26 +49,31 @@ import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.book
 import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.graphics.ColorFilter
 
 class BookUI {
     // UI for a single book item
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     fun bookItem(product: Books, onItemClick: (Books) -> Unit) {
+        val customColors = LocalCustomColors.current
+
         Row(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(customColors.primaryBackground),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             Column(
-                Modifier.fillMaxWidth(),
+                Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Card(
                     modifier = Modifier
-                        .size(height = 250.dp, width = 200.dp),
+                        .size(height = 250.dp, width = 200.dp).background(MaterialTheme.colors.background),
                 ) {
                     AsyncImage(
                         model = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage,
@@ -76,44 +82,46 @@ class BookUI {
                         fallback = painterResource(Res.drawable.book),
                         contentDescription = "${product.title} available",
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize().background(MaterialTheme.colors.background),
                         contentScale = ContentScale.Crop
                     )
                 }
                 product.title?.let {
                     Text(
-                        modifier = Modifier.padding(top = 12.dp),
+                        modifier = Modifier.padding(top = 12.dp).background(MaterialTheme.colors.background),
                         text = it,
-                        style = AppStyles.h5Style
+                        style = MaterialTheme.typography.h5
                     )
                 }
-                Text(text = "hello", style = AppStyles.bodyStyle)
+                Text(text = "hello", style = MaterialTheme.typography.body1)
                 Row {
                     repeat(4) {
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = "Rating",
-                            tint = AppStyles.primaryButtonColor
+                            tint = MaterialTheme.colors.onBackground
                         )
                     }
                     Icon(
                         imageVector = Icons.Outlined.Star,
                         contentDescription = "Rating",
-                        tint = AppStyles.primaryButtonColor
+                        tint = MaterialTheme.colors.onBackground
                     )
                 }
                 Row(
-                    modifier = Modifier.padding(2.dp)
+                    modifier = Modifier.padding(2.dp).background(MaterialTheme.colors.background)
                 ) {
                     Image(
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.size(20.dp).background(MaterialTheme.colors.background),
                         painter = painterResource(Res.drawable.headphones),
-                        contentDescription = null
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
                     )
                     Image(
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.size(20.dp).background(MaterialTheme.colors.background),
                         painter = painterResource(Res.drawable.menu_book),
-                        contentDescription = null
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
                     )
                 }
             }
@@ -125,6 +133,7 @@ class BookUI {
     fun categoryItem(category: BookCategory) {
         val navigator = LocalNavigator.currentOrThrow
         val bookContainers = remember { mutableStateOf<List<BookContainer?>>(emptyList()) }
+        val customColors = LocalCustomColors.current
 
         // Fetch book data with LaunchedEffect
         LaunchedEffect(category) {
@@ -138,12 +147,12 @@ class BookUI {
             bookContainers.value = books.awaitAll()
         }
 
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(Modifier.height(24.dp))
+        Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.background), horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
             Text(category.categoryDesc)
-            Spacer(Modifier.height(12.dp))
-            Text(category.categoryName, style = AppStyles.headingStyle)
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+            Text(category.categoryName)
+            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
 
             LazyRow {
                 itemsIndexed(bookContainers.value) { index, bookContainer ->
@@ -160,7 +169,7 @@ class BookUI {
         }
 
         Column(
-            Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp),
+            Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp).background(MaterialTheme.colors.background),
             horizontalAlignment = Alignment.End
         ) {
             ClickableText(
@@ -169,7 +178,7 @@ class BookUI {
                     navigator.push(AllBooksScreen())
                 },
                 style = TextStyle(
-                    color = AppStyles.primaryButtonColor,
+                    color = MaterialTheme.colors.onBackground,
                 )
             )
         }

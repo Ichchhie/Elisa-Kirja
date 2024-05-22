@@ -29,6 +29,7 @@ firebaseCrashlyticsBuildtools = "2.9.9"
 androidx-material3 = "1.2.1"
 material3Android = "1.2.1"
 foundationAndroid = "1.6.7"
+runtimeSaveableAndroid = "1.6.7"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -70,6 +71,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidx-material3" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
+androidx-runtime-saveable-android = { group = "androidx.compose.runtime", name = "runtime-saveable-android", version.ref = "runtimeSaveableAndroid" }
 
 
 [plugins]
