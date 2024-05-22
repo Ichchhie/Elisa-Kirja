@@ -1,5 +1,6 @@
 package models
 
+import androidx.compose.runtime.Stable
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 @Serializable

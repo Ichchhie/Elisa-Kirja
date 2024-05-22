@@ -31,10 +31,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.compose.SubcomposeAsyncImage
+import coil3.request.CachePolicy
+import coil3.request.ErrorResult
+import coil3.request.ImageRequest
+import coil3.request.SuccessResult
+import coil3.request.crossfade
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -54,6 +64,7 @@ class BookUI {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     fun bookItem(product: Books, onItemClick: (Books) -> Unit) {
+        val imageUrl = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage
         Row(
             modifier = Modifier
                 .padding(16.dp)
@@ -70,7 +81,11 @@ class BookUI {
                         .size(height = 250.dp, width = 200.dp),
                 ) {
                     AsyncImage(
-                        model = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage,
+                        model = ImageRequest.Builder(LocalPlatformContext.current)
+                            .data(imageUrl)
+                            .crossfade(true)
+                            .crossfade(800)
+                            .build(),
                         placeholder = painterResource(Res.drawable.book),
                         error = painterResource(Res.drawable.book),
                         fallback = painterResource(Res.drawable.book),
@@ -84,7 +99,10 @@ class BookUI {
                     Text(
                         modifier = Modifier.padding(top = 12.dp),
                         text = it,
-                        style = AppStyles.h5Style
+                        style = AppStyles.h5Style,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
                 Text(text = "hello", style = AppStyles.bodyStyle)
