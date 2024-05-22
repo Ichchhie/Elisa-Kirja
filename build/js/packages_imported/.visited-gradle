@@ -5,8 +5,8 @@
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-stdlib-wasm-js\\1.9.22\\184ac1ecda4780e160cb3a52bd47ac922fcdd2c\\kotlin-stdlib-wasm-js-1.9.22.klib"
     },
     "48c98acbbe5fd420f321ced6d4e1d290": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-client-core-wasm-js\\3.0.0-wasm2\\e203d99d552c9f0b655db0527c3a2acfaf379645\\ktor-client-core-wasm-js-3.0.0-wasm2.klib",
-      "target": "ktor-ktor-client-ktor-client-core-wasm-js\\3.0.0-wasm2"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-core-wasm-js/3.0.0-wasm2/e203d99d552c9f0b655db0527c3a2acfaf379645/ktor-client-core-wasm-js-3.0.0-wasm2.klib",
+      "target": "ktor-ktor-client-ktor-client-core-wasm-js/3.0.0-wasm2"
     },
     "39b8752da39ccd2fabcffba7904e522c": {
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-events-wasm-js\\3.0.0-wasm2\\3de663def0a0b83c1b6ad98d7162e0cb323de086\\ktor-events-wasm-js-3.0.0-wasm2.klib"
@@ -96,12 +96,12 @@
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.compose.ui\\ui-util-wasm-js\\1.6.0\\aa68c98868b44b79aef6e1c7101a3a79c4a26650\\ui-util-wasm-js-1.6.0.klib"
     },
     "e8278e1ca2b2c61789a2014b416ebbfa": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.skiko\\skiko-wasm-js\\0.7.93\\4e0d16e0dbd09686c155ce37341b0d6dd7dc6ba5\\skiko-wasm-js-0.7.93.klib",
-      "target": "skiko-wasm-js\\0.7.93"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.skiko/skiko-wasm-js/0.7.93/4e0d16e0dbd09686c155ce37341b0d6dd7dc6ba5/skiko-wasm-js-0.7.93.klib",
+      "target": "skiko-wasm-js/0.7.93"
     },
     "5f8c396c611dba6f31ce6325345f9730": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.skiko\\skiko-js-wasm-runtime\\0.7.93\\7aab65f777796ce91617702ef0a26d40d93ffdc3\\skiko-js-wasm-runtime-0.7.93.jar",
-      "target": "skiko-js-wasm-runtime\\0.7.93"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.skiko/skiko-js-wasm-runtime/0.7.93/7aab65f777796ce91617702ef0a26d40d93ffdc3/skiko-js-wasm-runtime-0.7.93.jar",
+      "target": "skiko-js-wasm-runtime/0.7.93"
     },
     "fa0c5f5cd0ecbbeaf1f8adfa6206fbbd": {
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.compose.runtime\\runtime-saveable-wasm-js\\1.6.0\\6327ebeb068ea240e27c591c59b91b9baa272ff1\\runtime-saveable-wasm-js-1.6.0.klib"
@@ -116,12 +116,12 @@
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.compose.material3\\material3-wasm-js\\1.6.0\\9fdf1c5b59e5e8864793de02fab22768b94558a1\\material3-wasm-js-1.6.0.klib"
     },
     "7ecf9d88842e7ca74b2a67c72f3c5b60": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlinx\\kotlinx-datetime-wasm-js\\0.5.0\\629555641f7616da6dd028fae163a288a0e28264\\kotlinx-datetime-wasm-js-0.5.0.klib",
-      "target": "Kotlin-DateTime-library-kotlinx-datetime-wasm-js\\0.5.0"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-datetime-wasm-js/0.5.0/629555641f7616da6dd028fae163a288a0e28264/kotlinx-datetime-wasm-js-0.5.0.klib",
+      "target": "Kotlin-DateTime-library-kotlinx-datetime-wasm-js/0.5.0"
     },
     "1a43adc46a52cf559bd1bf8ac339d728": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.compose.components\\components-resources-wasmJs\\1.6.0\\200eacab136558b32794e153bb2779bc2fe2e82\\library-wasm-js-1.6.0.klib",
-      "target": "components-resources-wasmJs\\1.6.0"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.components/components-resources-wasmJs/1.6.0/200eacab136558b32794e153bb2779bc2fe2e82/library-wasm-js-1.6.0.klib",
+      "target": "components-resources-wasmJs/1.6.0"
     },
     "4a22f4116b5f75eb813960d66951d3b7": {
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.compose.components\\components-ui-tooling-preview-wasmJs\\1.6.0\\1b163f7f7974363211a06ff60a82ccbde64ee398\\library-wasm-js-1.6.0.klib"
@@ -136,35 +136,35 @@
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\com.benasher44\\uuid-wasm-js\\0.8.2\\a8a9c7946accb66474de927b4485a3ee4dd28717\\uuid-wasm-js-0.8.2.klib"
     },
     "a2e0bd199bdaf9aa43f5fad560f2ddee": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.coil-kt.coil3\\coil-compose-wasm-js\\3.0.0-alpha06\\835a04365a2f8649fc9b43ac779090bb48f23dfc\\coil-compose-wasm-js-3.0.0-alpha06.klib",
-      "target": "coil-compose-wasm-js\\3.0.0-alpha06"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-compose-wasm-js/3.0.0-alpha06/835a04365a2f8649fc9b43ac779090bb48f23dfc/coil-compose-wasm-js-3.0.0-alpha06.klib",
+      "target": "coil-compose-wasm-js/3.0.0-alpha06"
     },
     "9f6a38a0b8a96854b3648ab366990b4e": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.coil-kt.coil3\\coil-compose-core-wasm-js\\3.0.0-alpha06\\5a6b02ec8010be4e23c11fcaf5a5ab6ccf25ac19\\coil-compose-core-wasm-js-3.0.0-alpha06.klib",
-      "target": "coil-compose-core-wasm-js\\3.0.0-alpha06"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-compose-core-wasm-js/3.0.0-alpha06/5a6b02ec8010be4e23c11fcaf5a5ab6ccf25ac19/coil-compose-core-wasm-js-3.0.0-alpha06.klib",
+      "target": "coil-compose-core-wasm-js/3.0.0-alpha06"
     },
     "daf4d4b0257641350f107e780296d235": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.coil-kt.coil3\\coil-core-wasm-js\\3.0.0-alpha06\\eb3124b623a7887407e9fa662bddb725e0904d9\\coil-core-wasm-js-3.0.0-alpha06.klib",
-      "target": "coil-core-wasm-js\\3.0.0-alpha06"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-core-wasm-js/3.0.0-alpha06/eb3124b623a7887407e9fa662bddb725e0904d9/coil-core-wasm-js-3.0.0-alpha06.klib",
+      "target": "coil-core-wasm-js/3.0.0-alpha06"
     },
     "987183cee2fbf7d39c4124ae8cae2f37": {
       "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.okio\\okio-wasm-js\\3.8.0\\96ce339b4fa012b60c0a429d82451a3b38bdb7d7\\okio-wasm-js-3.8.0.klib"
     },
     "1edb1820890eaa49c619e85e2397c80f": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.coil-kt.coil3\\coil-wasm-js\\3.0.0-alpha06\\1128ad82461ebe80b30a99f1e36aec86f2acf372\\coil-wasm-js-3.0.0-alpha06.klib",
-      "target": "coil-wasm-js\\3.0.0-alpha06"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-wasm-js/3.0.0-alpha06/1128ad82461ebe80b30a99f1e36aec86f2acf372/coil-wasm-js-3.0.0-alpha06.klib",
+      "target": "coil-wasm-js/3.0.0-alpha06"
     },
     "295fc9e5b96ed68633e1174ca4848d02": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.coil-kt.coil3\\coil-network-ktor-wasm-js\\3.0.0-alpha06\\7a320d3087d30ac036f37984a14b9b5c2525932\\coil-network-ktor-wasm-js-3.0.0-alpha06.klib",
-      "target": "coil-network-ktor-wasm-js\\3.0.0-alpha06"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-network-ktor-wasm-js/3.0.0-alpha06/7a320d3087d30ac036f37984a14b9b5c2525932/coil-network-ktor-wasm-js-3.0.0-alpha06.klib",
+      "target": "coil-network-ktor-wasm-js/3.0.0-alpha06"
     },
     "ee28ba4434d8ef239dcdfccb3c3b14d2": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\io.coil-kt.coil3\\coil-network-core-wasm-js\\3.0.0-alpha06\\b95ee257843d5833380d094d9544dbd8e1f27078\\coil-network-core-wasm-js-3.0.0-alpha06.klib",
-      "target": "coil-network-core-wasm-js\\3.0.0-alpha06"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-network-core-wasm-js/3.0.0-alpha06/b95ee257843d5833380d094d9544dbd8e1f27078/coil-network-core-wasm-js-3.0.0-alpha06.klib",
+      "target": "coil-network-core-wasm-js/3.0.0-alpha06"
     },
     "a66860f155cb10a237acb5f7d0f6d0e3": {
-      "src": "C:\\Users\\coderadmin\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-test-js-runner\\1.9.22\\e9b1fc55af69eb09d63b271d17c217d9483241cc\\kotlin-test-js-runner-1.9.22.jar",
-      "target": "kotlin-test-js-runner\\0.0.1"
+      "src": "/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js-runner/1.9.22/e9b1fc55af69eb09d63b271d17c217d9483241cc/kotlin-test-js-runner-1.9.22.jar",
+      "target": "kotlin-test-js-runner/0.0.1"
     }
   }
 }

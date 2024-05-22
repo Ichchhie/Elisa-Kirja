@@ -28,7 +28,7 @@ class AppStyles {
                 primary = Color(0xFFF8F9D7), //white cream
                 primaryVariant = Color(0xFF001F91),
                 secondary = Color(0xFFC4D7E0), //light light blue
-                background = Color(0xFFB2C8DF),//darkerBlue
+                background = Color.White,//darkerBlue
                 surface = Color.White,
                 onPrimary = Color.White,
                 onSecondary = Color.Black,

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,20 +26,29 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import models.AllBooksContainer
 import models.BookCategory
 import models.BookContainer
@@ -57,13 +67,13 @@ class BookUI {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     fun bookItem(product: Books, onItemClick: (Books) -> Unit) {
+        val imageUrl = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage
         val customColors = LocalCustomColors.current
 
         Row(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth()
-                .background(customColors.primaryBackground),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -76,7 +86,11 @@ class BookUI {
                         .size(height = 250.dp, width = 200.dp).background(MaterialTheme.colors.background),
                 ) {
                     AsyncImage(
-                        model = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage,
+                        model = ImageRequest.Builder(LocalPlatformContext.current)
+                            .data(imageUrl)
+                            .crossfade(true)
+                            .crossfade(800)
+                            .build(),
                         placeholder = painterResource(Res.drawable.book),
                         error = painterResource(Res.drawable.book),
                         fallback = painterResource(Res.drawable.book),
@@ -90,6 +104,9 @@ class BookUI {
                     Text(
                         modifier = Modifier.padding(top = 12.dp).background(MaterialTheme.colors.background),
                         text = it,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.h5
                     )
                 }
@@ -99,13 +116,13 @@ class BookUI {
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = "Rating",
-                            tint = MaterialTheme.colors.onBackground
+                            tint = MaterialTheme.colors.secondary
                         )
                     }
                     Icon(
                         imageVector = Icons.Outlined.Star,
                         contentDescription = "Rating",
-                        tint = MaterialTheme.colors.onBackground
+                        tint = MaterialTheme.colors.secondary
                     )
                 }
                 Row(
@@ -132,8 +149,8 @@ class BookUI {
     @Composable
     fun categoryItem(category: BookCategory) {
         val navigator = LocalNavigator.currentOrThrow
-        val bookContainers = remember { mutableStateOf<List<BookContainer?>>(emptyList()) }
-        val customColors = LocalCustomColors.current
+        val bookContainers = rememberSaveable() { mutableStateOf<List<BookContainer?>>(emptyList()) }
+        var isLoading by rememberSaveable { mutableStateOf(true) }
 
         // Fetch book data with LaunchedEffect
         LaunchedEffect(category) {
@@ -145,25 +162,37 @@ class BookUI {
                 }
             }
             bookContainers.value = books.awaitAll()
+            if (bookContainers.value.isNullOrEmpty()) {
+                delay(1000)
+            }
+            isLoading = false
         }
 
         Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.background), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
-            Text(category.categoryDesc)
-            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
-            Text(category.categoryName)
-            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+            if (isLoading) {
+                repeat(1) {
+                    //todo
+//                    Shimmer().ShimmerPlaceholder()
+                    LoadingEffect().LoadingAnimation()
+                }
+            } else {
+                Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
+                Text(category.categoryDesc)
+                Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+                Text(category.categoryName)
+                Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
 
-            LazyRow {
-                itemsIndexed(bookContainers.value) { index, bookContainer ->
-                    val product = category.books[index]
-                    product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
-                    bookItem(
-                        product = product,
-                        onItemClick = {
-                            // Handle item click
-                        }
-                    )
+                LazyRow {
+                    itemsIndexed(bookContainers.value) { index, bookContainer ->
+                        val product = category.books[index]
+                        product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
+                        bookItem(
+                            product = product,
+                            onItemClick = {
+                                // Handle item click
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -187,6 +216,7 @@ class BookUI {
     @Composable
     fun allBooksItem() {
         val bookContainers = remember { mutableStateOf<AllBooksContainer?>(null) }
+        var isLoading by remember { mutableStateOf(true) }
         // Fetch book data with LaunchedEffect
         LaunchedEffect("all_books") {
             val books = coroutineScope {
@@ -195,28 +225,34 @@ class BookUI {
                 }
             }
             bookContainers.value = books.await()
+            isLoading = false
         }
-        if (bookContainers != null) {
-            val list = bookContainers.value?.record?.books
-            list?.let { books ->
-                LazyVerticalGrid(
-                    columns = GridCells.Adaptive(minSize = 250.dp),
-                    content = {
-                        items(books.size) { item ->
-                            bookItem(books[item], onItemClick = {
-                                // handle item click
-                            })
-                        }
-                    }
-                )
+        if (isLoading) {
+            repeat(1) {
+//                Shimmer().ShimmerPlaceholder()
+                 Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                    LoadingEffect().LoadingAnimation()
+                }
             }
         } else {
-            Text("data fetching")
-            // Show a loading indicator or an error message
+            if (bookContainers != null) {
+                val list = bookContainers.value?.record?.books
+                list?.let { books ->
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(minSize = 250.dp),
+                        content = {
+                            items(books.size) { item ->
+                                bookItem(books[item], onItemClick = {
+                                    // handle item click
+                                })
+                            }
+                        }
+                    )
+                }
+                Text("data fetching")
+                // Show a loading indicator or an error message
+            }
         }
     }
-
-  
-
 }
 
