@@ -24,8 +24,10 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -38,6 +40,7 @@ import coil3.compose.AsyncImage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import models.AllBooksContainer
 import models.BookCategory
 import models.BookContainer
@@ -125,6 +128,8 @@ class BookUI {
     fun categoryItem(category: BookCategory) {
         val navigator = LocalNavigator.currentOrThrow
         val bookContainers = remember { mutableStateOf<List<BookContainer?>>(emptyList()) }
+        var isLoading by remember { mutableStateOf(true) }
+
 
         // Fetch book data with LaunchedEffect
         LaunchedEffect(category) {
@@ -136,6 +141,12 @@ class BookUI {
                 }
             }
             bookContainers.value = books.awaitAll()
+            if (bookContainers.value.isNullOrEmpty()) {
+
+                delay(1000)
+            }
+//            delay(1000)
+            isLoading = false
         }
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -144,17 +155,24 @@ class BookUI {
             Spacer(Modifier.height(12.dp))
             Text(category.categoryName, style = AppStyles.headingStyle)
             Spacer(Modifier.height(12.dp))
+            if (isLoading) {
+                repeat(5) {
+                    Shimmer().ShimmerPlaceholder()
+                }
+            } else {
 
-            LazyRow {
-                itemsIndexed(bookContainers.value) { index, bookContainer ->
-                    val product = category.books[index]
-                    product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
-                    bookItem(
-                        product = product,
-                        onItemClick = {
-                            // Handle item click
-                        }
-                    )
+
+                LazyRow {
+                    itemsIndexed(bookContainers.value) { index, bookContainer ->
+                        val product = category.books[index]
+                        product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
+                        bookItem(
+                            product = product,
+                            onItemClick = {
+                                // Handle item click
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -178,6 +196,7 @@ class BookUI {
     @Composable
     fun allBooksItem() {
         val bookContainers = remember { mutableStateOf<AllBooksContainer?>(null) }
+        var isLoading by remember { mutableStateOf(true) }
         // Fetch book data with LaunchedEffect
         LaunchedEffect("all_books") {
             val books = coroutineScope {
@@ -186,24 +205,31 @@ class BookUI {
                 }
             }
             bookContainers.value = books.await()
+//            delay(1000)
+            isLoading = false
         }
-        if (bookContainers != null) {
-            val list = bookContainers.value?.record?.books
-            list?.let { books ->
-                LazyVerticalGrid(
-                    columns = GridCells.Adaptive(minSize = 250.dp),
-                    content = {
-                        items(books.size) { item ->
-                            bookItem(books[item], onItemClick = {
-                                // handle item click
-                            })
-                        }
-                    }
-                )
+        if (isLoading) {
+            repeat(5) {
+                Shimmer().ShimmerPlaceholder()
             }
         } else {
-            Text("data fetching")
-            // Show a loading indicator or an error message
+            if (bookContainers != null) {
+                val list = bookContainers.value?.record?.books
+                list?.let { books ->
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(minSize = 250.dp),
+                        content = {
+                            items(books.size) { item ->
+                                bookItem(books[item], onItemClick = {
+                                    // handle item click
+                                })
+                            }
+                        }
+                    )
+                }
+                Text("data fetching")
+                // Show a loading indicator or an error message
+            }
         }
     }
 

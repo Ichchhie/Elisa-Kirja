@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -34,20 +36,23 @@ import wasmdemo.composeapp.generated.resources.elisa
 import wasmdemo.composeapp.generated.resources.menu_book
 @OptIn(ExperimentalResourceApi::class)
 class HomeScreen: Screen {
+    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     override fun Content() {
-        val booksViewModel = remember { BooksViewModel() }
+//        val booksViewModel = remember { BooksViewModel() }
         var showContent by remember { mutableStateOf(false) }
         var showBooks by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.currentOrThrow
+        var isLoading by remember { mutableStateOf(true) }
 
         // Simulate loading delay
         LaunchedEffect(Unit) {
-            delay(2000) // Simulate initial network delay
+//            delay(2000) // Simulate initial network delay
             showContent = true
-            booksViewModel.loadBooks()
-        }
 
+            //delay(1000)
+            isLoading = false
+        }
         LazyColumn(Modifier.fillMaxHeight()) {
             item {
                 NavBar().DisplayNavBar()
@@ -112,8 +117,8 @@ class HomeScreen: Screen {
                 }
             }
             if (showContent) {
-                if (booksViewModel.isLoading) {
-                    items(5) { // Display 5 shimmer placeholders while loading books
+                if (isLoading) {
+                    items(5) { //  5 shimmer placeholders
                         Shimmer().ShimmerPlaceholder()
                     }
                 } else {
