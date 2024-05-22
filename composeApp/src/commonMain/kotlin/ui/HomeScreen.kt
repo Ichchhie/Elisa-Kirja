@@ -118,7 +118,7 @@ class HomeScreen: Screen {
             }
             if (showContent) {
                 if (isLoading) {
-                    items(5) { //  5 shimmer placeholders
+                    items(1) { //  5 shimmer p  laceholders
                         Shimmer().ShimmerPlaceholder()
                     }
                 } else {

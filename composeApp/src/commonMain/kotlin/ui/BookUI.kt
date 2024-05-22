@@ -150,17 +150,18 @@ class BookUI {
         }
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(Modifier.height(24.dp))
-            Text(category.categoryDesc)
-            Spacer(Modifier.height(12.dp))
-            Text(category.categoryName, style = AppStyles.headingStyle)
-            Spacer(Modifier.height(12.dp))
+
             if (isLoading) {
-                repeat(5) {
+
+                repeat(1) {
                     Shimmer().ShimmerPlaceholder()
                 }
             } else {
-
+                Spacer(Modifier.height(24.dp))
+                Text(category.categoryDesc)
+                Spacer(Modifier.height(12.dp))
+                Text(category.categoryName, style = AppStyles.headingStyle)
+                Spacer(Modifier.height(12.dp))
 
                 LazyRow {
                     itemsIndexed(bookContainers.value) { index, bookContainer ->
@@ -209,7 +210,7 @@ class BookUI {
             isLoading = false
         }
         if (isLoading) {
-            repeat(5) {
+            repeat(1) {
                 Shimmer().ShimmerPlaceholder()
             }
         } else {
