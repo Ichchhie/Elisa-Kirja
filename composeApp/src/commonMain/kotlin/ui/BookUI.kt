@@ -150,7 +150,7 @@ class BookUI {
     fun categoryItem(category: BookCategory) {
         val navigator = LocalNavigator.currentOrThrow
         val bookContainers = rememberSaveable() { mutableStateOf<List<BookContainer?>>(emptyList()) }
-        var isLoading by rememberSaveable { mutableStateOf(true) }
+        var isLoading by rememberSaveable() { mutableStateOf(true) }
 
         // Fetch book data with LaunchedEffect
         LaunchedEffect(category) {
@@ -171,9 +171,9 @@ class BookUI {
         Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.background), horizontalAlignment = Alignment.CenterHorizontally) {
             if (isLoading) {
                 repeat(1) {
-                    //todo
-//                    Shimmer().ShimmerPlaceholder()
-                    LoadingEffect().LoadingAnimation()
+//                    todo
+                    Shimmer().ShimmerPlaceholder()
+//                    LoadingEffect().LoadingAnimation()
                 }
             } else {
                 Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))

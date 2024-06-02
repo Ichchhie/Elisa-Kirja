@@ -23,7 +23,7 @@ fun App() {
     AppTheme(isDarkTheme = isDarkTheme.value, toggleTheme = { isDarkTheme.value = !isDarkTheme.value }) {
         Column (modifier = Modifier.background(MaterialTheme.colors.background)){
             NavBar().DisplayNavBar(isDarkTheme = isDarkTheme.value, toggleTheme = { isDarkTheme.value = !isDarkTheme.value })
-            Navigator(screen = HomeScreen(isDarkTheme = isDarkTheme.value, toggleTheme = { isDarkTheme.value = !isDarkTheme.value }))
+            Navigator(screen = HomeScreen())
         }
     }
 }

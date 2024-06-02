@@ -51,15 +51,13 @@ import wasmdemo.composeapp.generated.resources.arrow_right
 import wasmdemo.composeapp.generated.resources.audiobook
 
 @OptIn(ExperimentalResourceApi::class)
-class HomeScreen(private val isDarkTheme: Boolean, private val toggleTheme: () -> Unit) :
-    Screen {
+class HomeScreen : Screen {
     @Composable
     override fun Content() {
         var showContent by remember { mutableStateOf(false) }
         val customColors = LocalCustomColors.current
         val navigator = LocalNavigator.currentOrThrow
         var isLoading by remember { mutableStateOf(true) }
-        var check = true
 
         // Simulate loading delay
         LaunchedEffect(Unit) {
@@ -134,14 +132,11 @@ class HomeScreen(private val isDarkTheme: Boolean, private val toggleTheme: () -
             }
             if (showContent) {
                 if (isLoading) {
-                    items(0) { //  5 shimmer placeholders
-                        //todo
-//                        Shimmer().ShimmerPlaceholder()
+                    item { //  5 shimmer placeholders
+//                        todo
+                        Shimmer().ShimmerPlaceholder()
 //                        Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-//                            if (check) {
 //                                LoadingEffect().LoadingAnimation()
-//                            }
-//                            check = false
 //                        }
                     }
                 } else {
