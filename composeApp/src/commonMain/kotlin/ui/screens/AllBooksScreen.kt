@@ -1,4 +1,4 @@
-package ui
+package ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import ui.BookUI
 
 class AllBooksScreen : Screen {
 

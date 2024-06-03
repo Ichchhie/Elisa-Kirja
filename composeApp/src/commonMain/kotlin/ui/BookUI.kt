@@ -61,6 +61,8 @@ import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.font.FontWeight
+import ui.screens.AllBooksScreen
 
 class BookUI {
     // UI for a single book item
@@ -177,7 +179,7 @@ class BookUI {
                 }
             } else {
                 Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
-                Text(category.categoryDesc)
+                Text(category.categoryDesc, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
                 Text(category.categoryName)
                 Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
@@ -206,6 +208,7 @@ class BookUI {
                 onClick = {
                     navigator.push(AllBooksScreen())
                 },
+                modifier = Modifier.padding(bottom = 16.dp),
                 style = TextStyle(
                     color = MaterialTheme.colors.onBackground,
                 )

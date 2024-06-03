@@ -1,16 +1,9 @@
-package ui
+package ui.screens
 
 import Greeting
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,8 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,6 +36,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ui.BookUI
+import ui.LocalCustomColors
 import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.arrow_right
 import wasmdemo.composeapp.generated.resources.audiobook
@@ -130,20 +122,10 @@ class HomeScreen : Screen {
                     }
                 }
             }
-            if (showContent) {
-                if (isLoading) {
-                    item { //  5 shimmer placeholders
-//                        todo
-                        Shimmer().ShimmerPlaceholder()
-//                        Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-//                                LoadingEffect().LoadingAnimation()
-//                        }
-                    }
-                } else {
+            if (showContent && !isLoading) {
                     items(Greeting().getBookCategories()) { category ->
                         BookUI().categoryItem(category)
                     }
-                }
             }
         }
     }
