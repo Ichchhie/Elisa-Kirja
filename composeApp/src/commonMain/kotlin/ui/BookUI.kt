@@ -172,8 +172,8 @@ class BookUI {
             if (isLoading) {
                 repeat(1) {
 //                    todo
-                    Shimmer().ShimmerPlaceholder()
-//                    LoadingEffect().LoadingAnimation()
+//                    Shimmer().ShimmerPlaceholder()
+                    LoadingEffect().LoadingAnimation()
                 }
             } else {
                 Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
