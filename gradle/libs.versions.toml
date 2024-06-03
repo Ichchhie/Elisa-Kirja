@@ -29,6 +29,7 @@ firebaseCrashlyticsBuildtools = "2.9.9"
 androidx-material3 = "1.2.1"
 material3Android = "1.2.1"
 foundationAndroid = "1.6.7"
+runtimeSaveableAndroid = "1.6.7"
 animationCoreAndroid = "1.6.7"
 lifecycleViewmodelAndroid = "2.8.0"
 
@@ -76,6 +77,7 @@ androidx-material3-android = { group = "androidx.compose.material3", name = "mat
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 androidx-animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animationCoreAndroid" }
 androidx-lifecycle-viewmodel-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-android", version.ref = "lifecycleViewmodelAndroid" }
+androidx-runtime-saveable-android = { group = "androidx.compose.runtime", name = "runtime-saveable-android", version.ref = "runtimeSaveableAndroid" }
 
 
 [plugins]

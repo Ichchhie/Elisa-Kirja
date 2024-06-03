@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,14 +51,13 @@ import wasmdemo.composeapp.generated.resources.arrow_right
 import wasmdemo.composeapp.generated.resources.audiobook
 
 @OptIn(ExperimentalResourceApi::class)
-class HomeScreen: Screen {
-    @OptIn(ExperimentalMaterialApi::class)
+class HomeScreen : Screen {
     @Composable
     override fun Content() {
         var showContent by remember { mutableStateOf(false) }
+        val customColors = LocalCustomColors.current
         val navigator = LocalNavigator.currentOrThrow
         var isLoading by remember { mutableStateOf(true) }
-        var check = true
 
         // Simulate loading delay
         LaunchedEffect(Unit) {
@@ -64,26 +65,17 @@ class HomeScreen: Screen {
             isLoading = false
         }
         //main ui of the page
-        LazyColumn(Modifier.fillMaxHeight()) {
+        LazyColumn(Modifier.fillMaxHeight().background(MaterialTheme.colors.background)) {
             item {
-                //for animating background color of heroimage
-                val infiniteTransition = rememberInfiniteTransition(label = "infinite")
-                val color by infiniteTransition.animateColor(
-                    initialValue = Color(0xFF513DF5),
-                    targetValue = Color.Blue,
-                    animationSpec = infiniteRepeatable(
-                        animation = tween(1500, easing = LinearEasing),
-                        repeatMode = RepeatMode.Reverse
-                    ),
-                    label = "color"
-                )
-                Column(Modifier.fillMaxWidth().drawBehind {
-                    drawRect(color)
-                }, horizontalAlignment = Alignment.CenterHorizontally) {
-                    NavBar().DisplayNavBar()
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     AnimatedVisibility(visible = showContent) {
                         val greeting = remember { Greeting().greet() }
-                        Row(Modifier.fillMaxWidth().padding(horizontal = 42.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Row(
+                            Modifier.fillMaxWidth()
+                                .background(color = customColors.secondaryBackground)
+                                .padding(horizontal = 42.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Column(
                                 Modifier.weight(0.6F, fill = true).padding(42.dp),
                                 horizontalAlignment = Alignment.Start
@@ -92,14 +84,14 @@ class HomeScreen: Screen {
                                     "$greeting",
                                     fontWeight = FontWeight.ExtraBold,
                                     fontSize = 54.sp,
-                                    color = Color.White,
+                                    color = MaterialTheme.colors.primary,
                                     lineHeight = 40.sp,
                                 )
                                 Spacer(Modifier.height(24.dp))
                                 Text(
                                     Greeting().elisaDescription(),
                                     fontSize = 20.sp,
-                                    color = Color.White,
+                                    color = MaterialTheme.colors.secondary,
                                     fontWeight = FontWeight.W500,
                                     lineHeight = 30.sp,
                                 )
@@ -112,20 +104,20 @@ class HomeScreen: Screen {
                                         disabledElevation = 0.dp
                                     ),
                                     shape = RoundedCornerShape(20.dp),
-                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
                                 ) {
                                     Text(
                                         Greeting().browseBooks(),
                                         Modifier.padding(end = 10.dp),
-                                        color = Color.Blue,
+                                        color = MaterialTheme.colors.onBackground,
                                         fontWeight = FontWeight.Bold
                                     )
                                     Image(
                                         painterResource(Res.drawable.arrow_right),
                                         contentDescription = "browse button icon",
-                                        modifier = Modifier.size(24.dp)
+                                        modifier = Modifier.size(24.dp),
+                                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
                                     )
-
                                 }
                             }
                             Column(
@@ -140,14 +132,12 @@ class HomeScreen: Screen {
             }
             if (showContent) {
                 if (isLoading) {
-                    items(0) { //  5 shimmer placeholders
-                        //Shimmer().ShimmerPlaceholder()
-                        Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                            if (check) {
-                                LoadingEffect().LoadingAnimation()
-                            }
-                            check = false
-                        }
+                    item { //  5 shimmer placeholders
+//                        todo
+                        Shimmer().ShimmerPlaceholder()
+//                        Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+//                                LoadingEffect().LoadingAnimation()
+//                        }
                     }
                 } else {
                     items(Greeting().getBookCategories()) { category ->
@@ -158,3 +148,4 @@ class HomeScreen: Screen {
         }
     }
 }
+

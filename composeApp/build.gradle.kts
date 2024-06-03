@@ -128,6 +128,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.foundation.android)
+    implementation(libs.androidx.runtime.saveable.android)
     implementation(libs.androidx.animation.core.android)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.android)
