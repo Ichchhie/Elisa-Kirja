@@ -1,5 +1,6 @@
 package ui
 
+
 import API.GetBooks
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -64,6 +65,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import ui.screens.AllBooksScreen
 
+
 class BookUI {
     // UI for a single book item
     @OptIn(ExperimentalResourceApi::class)
@@ -71,6 +73,7 @@ class BookUI {
     fun bookItem(product: Books, onItemClick: (Books) -> Unit) {
         val imageUrl = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage
         val customColors = LocalCustomColors.current
+
 
         Row(
             modifier = Modifier
@@ -147,12 +150,14 @@ class BookUI {
         }
     }
 
+
     // UI for a single book category item
     @Composable
     fun categoryItem(category: BookCategory) {
         val navigator = LocalNavigator.currentOrThrow
         val bookContainers = rememberSaveable() { mutableStateOf<List<BookContainer?>>(emptyList()) }
         var isLoading by rememberSaveable() { mutableStateOf(true) }
+
 
         // Fetch book data with LaunchedEffect
         LaunchedEffect(category) {
@@ -170,6 +175,7 @@ class BookUI {
             isLoading = false
         }
 
+
         Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.background), horizontalAlignment = Alignment.CenterHorizontally) {
             if (isLoading) {
                 repeat(1) {
@@ -183,6 +189,7 @@ class BookUI {
                 Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
                 Text(category.categoryName)
                 Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+
 
                 LazyRow {
                     itemsIndexed(bookContainers.value) { index, bookContainer ->
@@ -198,6 +205,7 @@ class BookUI {
                 }
             }
         }
+
 
         Column(
             Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp).background(MaterialTheme.colors.background),
@@ -216,6 +224,7 @@ class BookUI {
         }
     }
 
+
     @Composable
     fun allBooksItem() {
         val bookContainers = remember { mutableStateOf<AllBooksContainer?>(null) }
@@ -233,7 +242,7 @@ class BookUI {
         if (isLoading) {
             repeat(1) {
 //                Shimmer().ShimmerPlaceholder()
-                 Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                     LoadingEffect().LoadingAnimation()
                 }
             }
@@ -258,4 +267,3 @@ class BookUI {
         }
     }
 }
-

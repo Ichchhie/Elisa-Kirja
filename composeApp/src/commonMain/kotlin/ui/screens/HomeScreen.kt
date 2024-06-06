@@ -2,44 +2,43 @@ package ui.screens
 
 import Greeting
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import ui.BookUI
 import ui.LocalCustomColors
 import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.arrow_right
+import wasmdemo.composeapp.generated.resources.arrow_new
 import wasmdemo.composeapp.generated.resources.audiobook
 
 @OptIn(ExperimentalResourceApi::class)
@@ -50,30 +49,51 @@ class HomeScreen : Screen {
         val customColors = LocalCustomColors.current
         val navigator = LocalNavigator.currentOrThrow
         var isLoading by remember { mutableStateOf(true) }
+        val scrollState = rememberScrollState()
+        val coroutineScope = rememberCoroutineScope()
+        val density = LocalDensity.current
+        var canScroll by remember { mutableStateOf(false) }
 
-        // Simulate loading delay
         LaunchedEffect(Unit) {
+            // Simulating loading time
+            kotlinx.coroutines.delay(1000)
             showContent = true
             isLoading = false
         }
-        //main ui of the page
-        LazyColumn(Modifier.fillMaxHeight().background(MaterialTheme.colors.background)) {
-            item {
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    AnimatedVisibility(visible = showContent) {
+
+        // Main UI of the page
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .background(MaterialTheme.colors.background)
+                .then(if (canScroll) Modifier.verticalScroll(scrollState) else Modifier)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(customColors.secondaryBackground)
+                    .padding(horizontal = 42.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (showContent) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         val greeting = remember { Greeting().greet() }
                         Row(
-                            Modifier.fillMaxWidth()
-                                .background(color = customColors.secondaryBackground)
+                            Modifier
+                                .fillMaxWidth()
                                 .padding(horizontal = 42.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(
-                                Modifier.weight(0.6F, fill = true).padding(42.dp),
+                                Modifier
+                                    .weight(0.6f, fill = true)
+                                    .padding(42.dp),
                                 horizontalAlignment = Alignment.Start
                             ) {
                                 Text(
-                                    "$greeting",
+                                    greeting,
                                     fontWeight = FontWeight.ExtraBold,
                                     fontSize = 54.sp,
                                     color = MaterialTheme.colors.primary,
@@ -113,21 +133,61 @@ class HomeScreen : Screen {
                                 }
                             }
                             Column(
-                                Modifier.weight(0.4F, fill = true),
+                                Modifier.weight(0.4f, fill = true),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Image(painterResource(Res.drawable.audiobook), null)
+                            }
+                        }
+                        Spacer(Modifier.height(24.dp))
+                        // Down arrow image inside the blue section
+                        if (!isLoading) {
+                            Spacer(Modifier.height(16.dp))
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Card(
+                                    shape = CircleShape,
+                                    backgroundColor = MaterialTheme.colors.primary,
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clickable {
+                                            coroutineScope.launch {
+                                                canScroll = true
+                                                val scrollOffset = with(density) { 500.dp.toPx().toInt() }
+                                                scrollState.animateScrollTo(scrollOffset)
+                                            }
+                                        }
+                                ) {
+                                    Box(
+                                        contentAlignment = Alignment.Center,
+                                        modifier = Modifier.fillMaxSize()
+                                    ) {
+                                        Image(
+                                            painterResource(Res.drawable.arrow_new),
+                                            contentDescription = "down arrow",
+                                            modifier = Modifier.size(24.dp),
+                                            colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
             if (showContent && !isLoading) {
-                    items(Greeting().getBookCategories()) { category ->
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Greeting().getBookCategories().forEach { category ->
                         BookUI().categoryItem(category)
                     }
+                }
             }
         }
     }
 }
-
