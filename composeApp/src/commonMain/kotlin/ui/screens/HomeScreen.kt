@@ -59,17 +59,13 @@ class HomeScreen : Screen {
             isLoading = false
         }
         //main ui of the page
-        LazyColumn(Modifier.fillMaxHeight().background(MaterialTheme.colors.background)) {
+        LazyColumn() {
             item {
-                Column(
-                    Modifier.fillMaxHeight().aspectRatio(2f),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                )
-                {
+                Column(Modifier.fillParentMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
                     AnimatedVisibility(visible = showContent) {
                         val greeting = remember { Greeting().greet() }
                         Row(
-                            Modifier.fillMaxSize()
+                            Modifier.fillParentMaxSize()
                                 .background(color = customColors.secondaryBackground)
                                 .padding(horizontal = 42.dp),
                             verticalAlignment = Alignment.CenterVertically
