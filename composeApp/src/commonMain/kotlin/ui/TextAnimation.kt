@@ -104,7 +104,7 @@ class TextAnimation {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Blue)
+                .background(Color(0xFF6E85B7))
                 .offset(y = backgroundOffsetY.dp),
             contentAlignment = Alignment.Center
         ) {
