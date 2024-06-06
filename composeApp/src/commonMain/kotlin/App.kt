@@ -15,6 +15,7 @@ import ui.AppTheme
 import ui.NavBar
 import ui.TextAnimation
 import ui.screens.HomeScreen
+import ui.screens.NewHomeScreen
 
 @Composable
 @Preview

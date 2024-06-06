@@ -1,12 +1,15 @@
 package ui
 
 import API.GetBooks
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +20,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -60,8 +65,10 @@ import wasmdemo.composeapp.generated.resources.book
 import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import ui.screens.AllBooksScreen
 
 class BookUI {
@@ -146,7 +153,26 @@ class BookUI {
             }
         }
     }
-
+    @OptIn(ExperimentalFoundationApi::class)
+    @Composable
+    fun heroPager() {
+        // Creates a 1-pager/viewport vertical pager with single page snapping
+        val state = rememberPagerState { 3 }
+        VerticalPager(
+            state = state,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            Box(
+                modifier = Modifier
+                    .background(Color.Blue)
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = page.toString(), fontSize = 32.sp)
+            }
+        }
+    }
     // UI for a single book category item
     @Composable
     fun categoryItem(category: BookCategory) {
