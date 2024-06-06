@@ -1,7 +1,7 @@
 import models.BookCategory
 import models.Books
 
-class Greeting {
+class Strings {
     fun greet(): String {
         return "Welcome to\n \n" +"Elisa Kirja"
     }

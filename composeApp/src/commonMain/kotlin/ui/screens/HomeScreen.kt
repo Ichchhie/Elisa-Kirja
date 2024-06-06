@@ -1,16 +1,12 @@
 package ui.screens
 
-import Greeting
+import Strings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -63,7 +59,7 @@ class HomeScreen : Screen {
             item {
                 Column(Modifier.fillParentMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
                     AnimatedVisibility(visible = showContent) {
-                        val greeting = remember { Greeting().greet() }
+                        val strings = remember { Strings().greet() }
                         Row(
                             Modifier.fillParentMaxSize()
                                 .background(color = customColors.secondaryBackground)
@@ -75,7 +71,7 @@ class HomeScreen : Screen {
                                 horizontalAlignment = Alignment.Start
                             ) {
                                 Text(
-                                    "$greeting",
+                                    "$strings",
                                     fontWeight = FontWeight.ExtraBold,
                                     fontSize = 54.sp,
                                     color = MaterialTheme.colors.primary,
@@ -83,7 +79,7 @@ class HomeScreen : Screen {
                                 )
                                 Spacer(Modifier.height(24.dp))
                                 Text(
-                                    Greeting().elisaDescription(),
+                                    Strings().elisaDescription(),
                                     fontSize = 20.sp,
                                     color = MaterialTheme.colors.secondary,
                                     fontWeight = FontWeight.W500,
@@ -101,7 +97,7 @@ class HomeScreen : Screen {
                                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
                                 ) {
                                     Text(
-                                        Greeting().browseBooks(),
+                                        Strings().browseBooks(),
                                         Modifier.padding(end = 10.dp),
                                         color = MaterialTheme.colors.onBackground,
                                         fontWeight = FontWeight.Bold
@@ -125,7 +121,7 @@ class HomeScreen : Screen {
                 }
             }
             if (showContent && !isLoading) {
-                items(Greeting().getBookCategories()) { category ->
+                items(Strings().getBookCategories()) { category ->
                     BookUI().categoryItem(category)
                 }
             }
