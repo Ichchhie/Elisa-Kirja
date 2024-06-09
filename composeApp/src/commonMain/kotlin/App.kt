@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.Navigator
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.Animations
 import ui.AppTheme
 import ui.NavBar
 import ui.screens.HomeScreen
@@ -26,7 +27,7 @@ fun MyApp() {
         toggleTheme = { isDarkTheme.value = !isDarkTheme.value }) {
         Box(modifier = Modifier.fillMaxSize()) {
 //            if (splashVisible.value) {
-//                TextAnimation().SplashScreen {
+//                Animations().SplashScreen {
 //                    splashVisible.value = false
 //                }
 //            } else {

@@ -38,14 +38,14 @@ class Strings {
                 "OUR TOP-SELLING COLLECTION",
                 "Detective Books",
                 getBooks(),
-                "View all Detective books ->"
+                "View all Detective books"
             ),
             BookCategory(
                 2,
                 "OUR MOST-LOVED COLLECTION",
                 "Educational Books",
                 getBooks(),
-                "View all Educational Books ->"
+                "View all Educational Books"
             ),
         )
         return categoryList

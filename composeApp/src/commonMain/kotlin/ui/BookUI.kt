@@ -17,7 +17,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -35,13 +37,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
@@ -57,6 +59,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.AllBooksScreen
 import wasmdemo.composeapp.generated.resources.Res
+import wasmdemo.composeapp.generated.resources.arrow_right
 import wasmdemo.composeapp.generated.resources.book
 import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
@@ -150,7 +153,6 @@ class BookUI {
     @Composable
     fun categoryItem(category: BookCategory, allBooks: List<BookContainer?>) {
         val navigator = LocalNavigator.currentOrThrow
-
         Column(
             Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -180,16 +182,8 @@ class BookUI {
                 .background(MaterialTheme.colors.background),
             horizontalAlignment = Alignment.End
         ) {
-            ClickableText(
-                text = AnnotatedString(category.viewAllText),
-                onClick = {
-                    navigator.push(AllBooksScreen())
-                },
-                modifier = Modifier.padding(bottom = 16.dp),
-                style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
-                )
-            )
+            returnButton(category.viewAllText,35.dp, navigator)
+            Spacer(Modifier.height(24.dp))
         }
     }
 
@@ -236,6 +230,34 @@ class BookUI {
                 Text("data fetching")
                 // Show a loading indicator or an error message
             }
+        }
+    }
+
+    @OptIn(ExperimentalResourceApi::class)
+    @Composable
+    fun returnButton(text: String, size: Dp, navigator: Navigator){
+        return Button(
+            modifier = Modifier.height(size),
+            onClick = { navigator.push(AllBooksScreen()) },
+            elevation = ButtonDefaults.elevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 15.dp,
+                disabledElevation = 0.dp
+            ),
+            shape = RoundedCornerShape(20.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+        ) {
+            Text(
+                text,
+                color = MaterialTheme.colors.onBackground,
+                fontWeight = FontWeight.Bold
+            )
+            Image(
+                painterResource(Res.drawable.arrow_right),
+                contentDescription = "browse button icon",
+                modifier = Modifier.size(24.dp),
+                colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+            )
         }
     }
 }
