@@ -1,6 +1,6 @@
 package ui
 
-import API.GetBooks
+import API.BooksService
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,9 +17,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -29,40 +32,37 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import models.AllBooksContainer
 import models.BookCategory
 import models.BookContainer
 import models.Books
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ui.screens.AllBooksScreen
 import wasmdemo.composeapp.generated.resources.Res
+import wasmdemo.composeapp.generated.resources.arrow_right
 import wasmdemo.composeapp.generated.resources.book
 import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
-import androidx.compose.material.MaterialTheme
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.text.font.FontWeight
-import ui.screens.AllBooksScreen
 
 class BookUI {
     // UI for a single book item
@@ -85,7 +85,8 @@ class BookUI {
             ) {
                 Card(
                     modifier = Modifier
-                        .size(height = 250.dp, width = 200.dp).background(MaterialTheme.colors.background),
+                        .size(height = 250.dp, width = 200.dp)
+                        .background(MaterialTheme.colors.background),
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalPlatformContext.current)
@@ -104,7 +105,8 @@ class BookUI {
                 }
                 product.title?.let {
                     Text(
-                        modifier = Modifier.padding(top = 12.dp).background(MaterialTheme.colors.background),
+                        modifier = Modifier.padding(top = 12.dp)
+                            .background(MaterialTheme.colors.background),
                         text = it,
                         textAlign = TextAlign.Center,
                         maxLines = 1,
@@ -149,70 +151,39 @@ class BookUI {
 
     // UI for a single book category item
     @Composable
-    fun categoryItem(category: BookCategory) {
+    fun categoryItem(category: BookCategory, allBooks: List<BookContainer?>) {
         val navigator = LocalNavigator.currentOrThrow
-        val bookContainers = rememberSaveable() { mutableStateOf<List<BookContainer?>>(emptyList()) }
-        var isLoading by rememberSaveable() { mutableStateOf(true) }
+        Column(
+            Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
+            Text(category.categoryDesc, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+            Text(category.categoryName)
+            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
 
-        // Fetch book data with LaunchedEffect
-        LaunchedEffect(category) {
-            val books = category.books.map { book ->
-                coroutineScope {
-                    async {
-                        GetBooks().retrieveBooksFromAPI(book.id)
-                    }
-                }
-            }
-            bookContainers.value = books.awaitAll()
-            if (bookContainers.value.isNullOrEmpty()) {
-                delay(1000)
-            }
-            isLoading = false
-        }
-
-        Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.background), horizontalAlignment = Alignment.CenterHorizontally) {
-            if (isLoading) {
-                repeat(1) {
-//                    todo
-//                    Shimmer().ShimmerPlaceholder()
-                    LoadingEffect().LoadingAnimation()
-                }
-            } else {
-                Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
-                Text(category.categoryDesc, fontWeight = FontWeight.Bold)
-                Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
-                Text(category.categoryName)
-                Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
-
-                LazyRow {
-                    itemsIndexed(bookContainers.value) { index, bookContainer ->
-                        val product = category.books[index]
-                        product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
-                        bookItem(
-                            product = product,
-                            onItemClick = {
-                                // Handle item click
-                            }
-                        )
-                    }
+            LazyRow {
+                itemsIndexed(allBooks) { index, bookContainer ->
+                    val product = category.books[index]
+                    product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
+                    bookItem(
+                        product = product,
+                        onItemClick = {
+                            // Handle item click
+                        }
+                    )
                 }
             }
         }
 
         Column(
-            Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp).background(MaterialTheme.colors.background),
+            Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp)
+                .background(MaterialTheme.colors.background),
             horizontalAlignment = Alignment.End
         ) {
-            ClickableText(
-                text = AnnotatedString(category.viewAllText),
-                onClick = {
-                    navigator.push(AllBooksScreen())
-                },
-                modifier = Modifier.padding(bottom = 16.dp),
-                style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
-                )
-            )
+            returnButton(category.viewAllText,35.dp, navigator)
+            Spacer(Modifier.height(24.dp))
         }
     }
 
@@ -224,7 +195,7 @@ class BookUI {
         LaunchedEffect("all_books") {
             val books = coroutineScope {
                 async {
-                    GetBooks().retrieveAllBooksOfCategory("483")
+                    BooksService().retrieveAllBooksOfCategory("483")
                 }
             }
             bookContainers.value = books.await()
@@ -233,7 +204,11 @@ class BookUI {
         if (isLoading) {
             repeat(1) {
 //                Shimmer().ShimmerPlaceholder()
-                 Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Column(
+                    Modifier.fillMaxWidth().fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     LoadingEffect().LoadingAnimation()
                 }
             }
@@ -255,6 +230,34 @@ class BookUI {
                 Text("data fetching")
                 // Show a loading indicator or an error message
             }
+        }
+    }
+
+    @OptIn(ExperimentalResourceApi::class)
+    @Composable
+    fun returnButton(text: String, size: Dp, navigator: Navigator){
+        return Button(
+            modifier = Modifier.height(size),
+            onClick = { navigator.push(AllBooksScreen()) },
+            elevation = ButtonDefaults.elevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 15.dp,
+                disabledElevation = 0.dp
+            ),
+            shape = RoundedCornerShape(20.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+        ) {
+            Text(
+                text,
+                color = MaterialTheme.colors.onBackground,
+                fontWeight = FontWeight.Bold
+            )
+            Image(
+                painterResource(Res.drawable.arrow_right),
+                contentDescription = "browse button icon",
+                modifier = Modifier.size(24.dp),
+                colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+            )
         }
     }
 }
