@@ -101,6 +101,13 @@ class AppStyles {
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp,
                 color = Color.Black
+            ),
+            button = TextStyle(
+                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp,
+                lineHeight = 16.sp,
+                letterSpacing = 1.25.sp,
+                color = Color.Black
             )
             // Add other text styles as needed
         )
@@ -152,6 +159,13 @@ class AppStyles {
                 fontFamily = fontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp,
+                color = Color.Black
+            ),
+            button = TextStyle(
+                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp,
+                lineHeight = 16.sp,
+                letterSpacing = 1.25.sp,
                 color = Color.Black
             )
             // Add other text styles as needed

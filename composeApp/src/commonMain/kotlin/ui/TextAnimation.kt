@@ -1,6 +1,5 @@
 package ui
 
-import API.GetBooks
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloat
@@ -26,18 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
-import coil3.compose.LocalPlatformContext
-import coil3.request.ImageRequest
-import coil3.request.crossfade
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import models.AllBooksContainer
-import models.BookCategory
-import models.BookContainer
-import models.Books
+
 class TextAnimation {
 
     @Composable

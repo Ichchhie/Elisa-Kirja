@@ -1,7 +1,6 @@
 package ui
 
-
-import API.GetBooks
+import API.BooksService
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +20,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -30,13 +30,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -47,24 +48,18 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import models.AllBooksContainer
 import models.BookCategory
 import models.BookContainer
 import models.Books
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ui.screens.AllBooksScreen
 import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.book
 import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
-import androidx.compose.material.MaterialTheme
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.text.font.FontWeight
-import ui.screens.AllBooksScreen
-
 
 class BookUI {
     // UI for a single book item
@@ -73,7 +68,6 @@ class BookUI {
     fun bookItem(product: Books, onItemClick: (Books) -> Unit) {
         val imageUrl = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage
         val customColors = LocalCustomColors.current
-
 
         Row(
             modifier = Modifier
@@ -88,7 +82,8 @@ class BookUI {
             ) {
                 Card(
                     modifier = Modifier
-                        .size(height = 250.dp, width = 200.dp).background(MaterialTheme.colors.background),
+                        .size(height = 250.dp, width = 200.dp)
+                        .background(MaterialTheme.colors.background),
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalPlatformContext.current)
@@ -107,7 +102,8 @@ class BookUI {
                 }
                 product.title?.let {
                     Text(
-                        modifier = Modifier.padding(top = 12.dp).background(MaterialTheme.colors.background),
+                        modifier = Modifier.padding(top = 12.dp)
+                            .background(MaterialTheme.colors.background),
                         text = it,
                         textAlign = TextAlign.Center,
                         maxLines = 1,
@@ -150,65 +146,38 @@ class BookUI {
         }
     }
 
-
     // UI for a single book category item
     @Composable
-    fun categoryItem(category: BookCategory) {
+    fun categoryItem(category: BookCategory, allBooks: List<BookContainer?>) {
         val navigator = LocalNavigator.currentOrThrow
-        val bookContainers = rememberSaveable() { mutableStateOf<List<BookContainer?>>(emptyList()) }
-        var isLoading by rememberSaveable() { mutableStateOf(true) }
-
-
-        // Fetch book data with LaunchedEffect
-        LaunchedEffect(category) {
-            val books = category.books.map { book ->
-                coroutineScope {
-                    async {
-                        GetBooks().retrieveBooksFromAPI(book.id)
-                    }
-                }
-            }
-            bookContainers.value = books.awaitAll()
-            if (bookContainers.value.isNullOrEmpty()) {
-                delay(1000)
-            }
-            isLoading = false
-        }
-
-
-        Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.background), horizontalAlignment = Alignment.CenterHorizontally) {
-            if (isLoading) {
-                repeat(1) {
-//                    todo
-//                    Shimmer().ShimmerPlaceholder()
-                    LoadingEffect().LoadingAnimation()
-                }
-            } else {
-                Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
-                Text(category.categoryDesc, fontWeight = FontWeight.Bold)
-                Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
-                Text(category.categoryName)
-                Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
-
-
-                LazyRow {
-                    itemsIndexed(bookContainers.value) { index, bookContainer ->
-                        val product = category.books[index]
-                        product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
-                        bookItem(
-                            product = product,
-                            onItemClick = {
-                                // Handle item click
-                            }
-                        )
-                    }
-                }
-            }
-        }
-
 
         Column(
-            Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp).background(MaterialTheme.colors.background),
+            Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
+            Text(category.categoryDesc, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+            Text(category.categoryName)
+            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+
+            LazyRow {
+                itemsIndexed(allBooks) { index, bookContainer ->
+                    val product = category.books[index]
+                    product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
+                    bookItem(
+                        product = product,
+                        onItemClick = {
+                            // Handle item click
+                        }
+                    )
+                }
+            }
+        }
+
+        Column(
+            Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp)
+                .background(MaterialTheme.colors.background),
             horizontalAlignment = Alignment.End
         ) {
             ClickableText(
@@ -224,7 +193,6 @@ class BookUI {
         }
     }
 
-
     @Composable
     fun allBooksItem() {
         val bookContainers = remember { mutableStateOf<AllBooksContainer?>(null) }
@@ -233,7 +201,7 @@ class BookUI {
         LaunchedEffect("all_books") {
             val books = coroutineScope {
                 async {
-                    GetBooks().retrieveAllBooksOfCategory("483")
+                    BooksService().retrieveAllBooksOfCategory("483")
                 }
             }
             bookContainers.value = books.await()
@@ -242,7 +210,11 @@ class BookUI {
         if (isLoading) {
             repeat(1) {
 //                Shimmer().ShimmerPlaceholder()
-                Column(Modifier.fillMaxWidth().fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Column(
+                    Modifier.fillMaxWidth().fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     LoadingEffect().LoadingAnimation()
                 }
             }
@@ -267,3 +239,4 @@ class BookUI {
         }
     }
 }
+

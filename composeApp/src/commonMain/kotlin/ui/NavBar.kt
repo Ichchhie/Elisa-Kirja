@@ -149,7 +149,7 @@ class NavBar {
             ) {
                 Text(
                     "Login",
-                    color = MaterialTheme.colors.onBackground
+                    style = MaterialTheme.typography.button
                 )
             }
             // Add the theme toggle button to the NavBar
