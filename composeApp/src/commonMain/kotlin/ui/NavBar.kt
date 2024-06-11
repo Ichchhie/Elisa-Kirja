@@ -108,10 +108,10 @@ class NavBar {
                 },
                 modifier = Modifier
                     .width(300.dp)
-                    .background(customColors.secondaryBackground, shape = RoundedCornerShape(24.dp)),
+                    .background(customColors.secondaryBackground, shape = RoundedCornerShape(20.dp)),
                 shape = RoundedCornerShape(24.dp), // Set the rounded corners
                 singleLine = true,
-                textStyle = TextStyle(color = Color.White),
+                textStyle = TextStyle(color = Color.Black),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
@@ -191,7 +191,7 @@ class NavBar {
                     contentColor = if (isDarkTheme) Color.White else Color.Black
                 )
             ) {
-                Text(if (isDarkTheme) "Light Theme" else "Dark Theme")
+                Text(if (isDarkTheme) "Light Mode" else "Dark Mode")
             }
             Spacer(modifier = Modifier.height(8.dp)) // Margin between items
         }
