@@ -1,4 +1,4 @@
-package ui
+package ui.UIHelper
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearOutSlowInEasing

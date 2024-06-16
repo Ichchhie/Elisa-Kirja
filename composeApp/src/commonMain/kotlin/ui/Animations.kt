@@ -1,19 +1,17 @@
 package ui
 
-import androidx.compose.animation.animateColor
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.InfiniteTransition
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,14 +21,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
 import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,52 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import wasmdemo.composeapp.generated.resources.Res
-import wasmdemo.composeapp.generated.resources.arrow_right
 
 class Animations{
-    @OptIn(ExperimentalResourceApi::class)
-    @Composable
-    fun HorizontalBouncingIcon(infiniteTransition: InfiniteTransition) {
-        val startColor = Color.Green
-        val endColor = Color.Black
-        val animatedColor by infiniteTransition.animateColor(
-            initialValue = startColor,
-            targetValue = endColor,
-            animationSpec = infiniteRepeatable(
-                tween(800, easing = FastOutLinearInEasing),
-                RepeatMode.Reverse,
-            )
-        )
-        val position by infiniteTransition.animateFloat(
-            initialValue = -10f,
-            targetValue = 10f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(
-                    800,
-                    easing = FastOutLinearInEasing
-                ),
-                repeatMode = RepeatMode.Reverse
-            )
-        )
-        Icon(
-            Icons.AutoMirrored.Filled.KeyboardArrowRight,
-            contentDescription = "Hear icon",
-            tint = MaterialTheme.colors.onBackground,
-            modifier = Modifier
-                .size(24.dp)
-                .offset(x = position.dp)
-        )
-    }
     @Composable
     fun TypewriteText(
         text: String,

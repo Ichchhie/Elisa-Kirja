@@ -1,4 +1,4 @@
-package models
+package Viewmodels
 
 import API.BooksService
 import Strings
@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import models.BookContainer
 
 //this viewmodel class is inheriting the screenmodel class of voyager library and is similar to the android viewmodel
 class BooksViewModel() : ScreenModel {
@@ -27,13 +28,16 @@ class BooksViewModel() : ScreenModel {
     }
 
     private fun fetchMoreData(currentIndex: Int) {
-        println("hello inside fetch more${currentIndex}")
+        var count = 0;
         if (currentIndex < categories.size) {
             val category = categories[currentIndex]
             category.books.forEach {
                 it.id?.let { it1 -> fetchData(it1) }
+                count++
             }
-            _newBooksStateFlow.update { true }
+            println("apple ${category.books.size}")
+            if (count == category.books.size)
+                _newBooksStateFlow.update { true }
         } else {
             _endReachedFlow.update { true }
         }

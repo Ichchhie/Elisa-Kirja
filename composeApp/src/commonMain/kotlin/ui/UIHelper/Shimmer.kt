@@ -1,5 +1,5 @@
 // Shimmer.kt
-package ui
+package ui.UIHelper
 
 //import androidx.compose.runtime.rememberInfiniteTransition
 import androidx.compose.animation.core.RepeatMode

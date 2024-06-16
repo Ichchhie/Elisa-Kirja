@@ -1,6 +1,7 @@
 package ui.screens
 
 import Strings
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -44,7 +45,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.launch
 import models.BookContainer
-import models.BooksViewModel
+import Viewmodels.BooksViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import ui.Animations
@@ -57,6 +58,7 @@ import wasmdemo.composeapp.generated.resources.audiobook
 
 @OptIn(ExperimentalResourceApi::class)
 class HomeScreen : Screen {
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -110,6 +112,7 @@ class HomeScreen : Screen {
         // Main UI of the page
         LazyColumn(
             state = listState,
+            userScrollEnabled = showContent //to only enable once firs API collection fetched
         ) {
             item {
                 Column(
@@ -185,7 +188,7 @@ class HomeScreen : Screen {
                     }
                 }
             }
-            if (showContent) {
+            if (showContent && currentIndex<=Strings().getBookCategories().size) {
                 items(currentIndex) { category ->
                     BookUI().categoryItem(
                         Strings().getBookCategories()[category],
@@ -207,6 +210,6 @@ class HomeScreen : Screen {
             }
         }
     }
-
 }
+
 

@@ -1,6 +1,13 @@
 package ui
 
 import API.BooksService
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +39,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,12 +59,14 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import models.AllBooksContainer
 import models.BookCategory
 import models.BookContainer
 import models.Books
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ui.UIHelper.LoadingEffect
 import ui.screens.AllBooksScreen
 import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.arrow_right
@@ -72,78 +82,92 @@ class BookUI {
         val imageUrl = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage
         val customColors = LocalCustomColors.current
 
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+        AnimatedVisibility(
+            visible = true,
+            enter = slideInHorizontally() + expandIn (
+                // Expand from the top.
+                expandFrom = Alignment.CenterStart
+            ) + fadeIn(
+                initialAlpha = 0.9f,
+                animationSpec = tween(durationMillis = 20000),
+            ),
         ) {
-            Column(
-                Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
-                Card(
-                    modifier = Modifier
-                        .size(height = 250.dp, width = 200.dp)
-                        .background(MaterialTheme.colors.background),
+                Column(
+                    Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalPlatformContext.current)
-                            .data(imageUrl)
-                            .crossfade(true)
-                            .crossfade(800)
-                            .build(),
-                        placeholder = painterResource(Res.drawable.book),
-                        error = painterResource(Res.drawable.book),
-                        fallback = painterResource(Res.drawable.book),
-                        contentDescription = "${product.title} available",
+                    Card(
                         modifier = Modifier
-                            .fillMaxSize().background(MaterialTheme.colors.background),
-                        contentScale = ContentScale.Crop
-                    )
-                }
-                product.title?.let {
-                    Text(
-                        modifier = Modifier.padding(top = 12.dp)
+                            .size(height = 250.dp, width = 200.dp)
                             .background(MaterialTheme.colors.background),
-                        text = it,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.h5
-                    )
-                }
-                Text(text = "hello", style = MaterialTheme.typography.body1)
-                Row {
-                    repeat(4) {
+                    ) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalPlatformContext.current)
+                                .data(imageUrl)
+                                .crossfade(true)
+                                .crossfade(800)
+                                .build(),
+                            placeholder = painterResource(Res.drawable.book),
+                            error = painterResource(Res.drawable.book),
+                            fallback = painterResource(Res.drawable.book),
+                            contentDescription = "${product.title} available",
+                            modifier = Modifier
+                                .fillMaxSize().background(MaterialTheme.colors.background),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    product.title?.let {
+                        Text(
+                            modifier = Modifier.padding(top = 12.dp)
+                                .background(MaterialTheme.colors.background),
+                            text = it,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.h5
+                        )
+                    }
+                    Text(text = "hello", style = MaterialTheme.typography.body1)
+                    Row {
+                        repeat(4) {
+                            Icon(
+                                imageVector = Icons.Filled.Star,
+                                contentDescription = "Rating",
+                                tint = MaterialTheme.colors.secondary
+                            )
+                        }
                         Icon(
-                            imageVector = Icons.Filled.Star,
+                            imageVector = Icons.Outlined.Star,
                             contentDescription = "Rating",
                             tint = MaterialTheme.colors.secondary
                         )
                     }
-                    Icon(
-                        imageVector = Icons.Outlined.Star,
-                        contentDescription = "Rating",
-                        tint = MaterialTheme.colors.secondary
-                    )
-                }
-                Row(
-                    modifier = Modifier.padding(2.dp).background(MaterialTheme.colors.background)
-                ) {
-                    Image(
-                        modifier = Modifier.size(20.dp).background(MaterialTheme.colors.background),
-                        painter = painterResource(Res.drawable.headphones),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
-                    )
-                    Image(
-                        modifier = Modifier.size(20.dp).background(MaterialTheme.colors.background),
-                        painter = painterResource(Res.drawable.menu_book),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
-                    )
+                    Row(
+                        modifier = Modifier.padding(2.dp)
+                            .background(MaterialTheme.colors.background)
+                    ) {
+                        Image(
+                            modifier = Modifier.size(20.dp)
+                                .background(MaterialTheme.colors.background),
+                            painter = painterResource(Res.drawable.headphones),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                        )
+                        Image(
+                            modifier = Modifier.size(20.dp)
+                                .background(MaterialTheme.colors.background),
+                            painter = painterResource(Res.drawable.menu_book),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                        )
+                    }
                 }
             }
         }
@@ -153,36 +177,89 @@ class BookUI {
     @Composable
     fun categoryItem(category: BookCategory, allBooks: List<BookContainer?>) {
         val navigator = LocalNavigator.currentOrThrow
+        var showContent by rememberSaveable() { mutableStateOf(false) }
+
+        LaunchedEffect(Unit) {
+            delay(200)
+            showContent = true
+        }
         Column(
             Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(Modifier.height(24.dp).background(MaterialTheme.colors.background))
-            Text(category.categoryDesc, fontWeight = FontWeight.Bold)
-            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
-            Text(category.categoryName)
-            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
-
-            LazyRow {
-                itemsIndexed(allBooks) { index, bookContainer ->
-                    val product = category.books[index]
-                    product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
-                    bookItem(
-                        product = product,
-                        onItemClick = {
-                            // Handle item click
-                        }
+            androidx.compose.animation.AnimatedVisibility(
+                visible = showContent,
+                enter = fadeIn (
+//                    initialOffsetY = { it },
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = LinearOutSlowInEasing,
+                        delayMillis = 200
                     )
+                )
+            ) {
+                Text(category.categoryDesc, fontWeight = FontWeight.Bold)
+            }
+            Spacer(Modifier.height(12.dp).background(MaterialTheme.colors.background))
+            androidx.compose.animation.AnimatedVisibility(
+                visible = showContent,
+                enter = fadeIn (
+//                    initialOffsetY = { it },
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = LinearOutSlowInEasing,
+                        delayMillis = 200
+                    )
+                )
+            ) {
+                Text(category.categoryName)
+            }
+            Spacer(Modifier.height(16.dp).background(MaterialTheme.colors.background))
+            androidx.compose.animation.AnimatedVisibility(
+                visible = showContent,
+                enter = slideInVertically(
+                    initialOffsetY = { it },
+                    animationSpec = tween(
+                        durationMillis = 1000,
+                        easing = LinearOutSlowInEasing,
+                        delayMillis = 300
+                    )
+                ),
+            ) {
+                LazyRow {
+                    itemsIndexed(allBooks) { index, bookContainer ->
+                        val product = category.books[index]
+                        product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
+                        bookItem(
+                            product = product,
+                            onItemClick = {
+                                // Handle item click
+                            }
+                        )
+                    }
                 }
             }
         }
-
+        Spacer(Modifier.height(8.dp))
         Column(
             Modifier.fillMaxWidth().padding(top = 4.dp, end = 16.dp)
                 .background(MaterialTheme.colors.background),
             horizontalAlignment = Alignment.End
         ) {
-            returnButton(category.viewAllText,35.dp, navigator)
+            androidx.compose.animation.AnimatedVisibility(
+                visible = showContent,
+                enter = slideInVertically(
+                    initialOffsetY = { it },
+                    animationSpec = tween(
+                        durationMillis = 1000,
+                        easing = LinearOutSlowInEasing,
+                        delayMillis = 300
+                    )
+                ),
+            ) {
+                returnButton(category.viewAllText, 35.dp, navigator)
+            }
             Spacer(Modifier.height(24.dp))
         }
     }
@@ -235,7 +312,7 @@ class BookUI {
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable
-    fun returnButton(text: String, size: Dp, navigator: Navigator){
+    fun returnButton(text: String, size: Dp, navigator: Navigator) {
         return Button(
             modifier = Modifier.height(size),
             onClick = { navigator.push(AllBooksScreen()) },
