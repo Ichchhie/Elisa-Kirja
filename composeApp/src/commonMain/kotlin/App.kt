@@ -20,7 +20,7 @@ import ui.screens.HomeScreen
 @Composable
 @Preview
 fun MyApp() {
-    val isDarkTheme = rememberSaveable { mutableStateOf(false) }
+    val isDarkTheme = rememberSaveable { mutableStateOf(true) }
     val splashVisible = remember { mutableStateOf(true) }
     AppTheme(
         isDarkTheme = isDarkTheme.value,
