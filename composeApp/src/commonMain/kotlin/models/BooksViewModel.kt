@@ -14,28 +14,46 @@ import kotlinx.coroutines.launch
 class BooksViewModel() : ScreenModel {
     private val allBooksStateFlow = MutableStateFlow<List<BookContainer?>>(emptyList())
     val allBooks: StateFlow<List<BookContainer?>> get() = allBooksStateFlow
-    private val _user = MutableStateFlow<BookContainer?>(null)
-    val user: StateFlow<BookContainer?> get() = _user
-    private val apiService= BooksService()
+    private val _bookStateFlow = MutableStateFlow<BookContainer?>(null)
+    private val _newBooksStateFlow = MutableStateFlow<Boolean?>(false)
+    val isNewBooksAdded: StateFlow<Boolean?> get() = _newBooksStateFlow
+    private val apiService = BooksService()
+    private var categories = Strings().getBookCategories()
+    private val _endReachedFlow = MutableStateFlow<Boolean?>(false)
+    val hasReachedEnd: StateFlow<Boolean?> get() = _endReachedFlow
 
     init {
-        Strings().getBookCategories().forEach { category ->
+        fetchMoreData(0)
+    }
+
+    private fun fetchMoreData(currentIndex: Int) {
+        println("hello inside fetch more${currentIndex}")
+        if (currentIndex < categories.size) {
+            val category = categories[currentIndex]
             category.books.forEach {
                 it.id?.let { it1 -> fetchData(it1) }
             }
+            _newBooksStateFlow.update { true }
+        } else {
+            _endReachedFlow.update { true }
         }
     }
-    fun fetchData(userId: String){
+
+    private fun fetchData(userId: String) {
         screenModelScope.launch {
             //fetch data code
-            _user.value = apiService.retrieveBooksFromAPI(userId)
-            _user.value?.let { user ->
+            _bookStateFlow.value = apiService.retrieveBooksFromAPI(userId)
+            _bookStateFlow.value?.let { user ->
                 allBooksStateFlow.update { it + user }
             }
         }
     }
+
     fun isDataLoaded(): Boolean {
-        return allBooks.value.isNotEmpty() && allBooks.value.size==Strings().getBooks().size
+        return allBooks.value.isNotEmpty() && allBooks.value.size == Strings().getBooks().size
     }
 
+    fun loadMoreData(currentIndex: Int) {
+        fetchMoreData(currentIndex)
+    }
 }

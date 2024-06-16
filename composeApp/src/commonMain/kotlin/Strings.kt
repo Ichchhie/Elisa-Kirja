@@ -47,6 +47,34 @@ class Strings {
                 getBooks(),
                 "View all Educational Books"
             ),
+            BookCategory(
+                3,
+                "Third TOP-SELLING COLLECTION",
+                "Detective Books",
+                getBooks(),
+                "View all Detective books"
+            ),
+            BookCategory(
+                4,
+                "Forth MOST-LOVED COLLECTION",
+                "Educational Books",
+                getBooks(),
+                "View all Educational Books"
+            ),
+            BookCategory(
+                5,
+                "fifth TOP-SELLING COLLECTION",
+                "Detective Books",
+                getBooks(),
+                "View all Detective books"
+            ),
+            BookCategory(
+                6,
+                "Sixth MOST-LOVED COLLECTION",
+                "Educational Books",
+                getBooks(),
+                "View all Educational Books"
+            ),
         )
         return categoryList
     }

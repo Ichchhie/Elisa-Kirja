@@ -14,15 +14,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -38,7 +33,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -56,6 +50,7 @@ import org.jetbrains.compose.resources.painterResource
 import ui.Animations
 import ui.BookUI
 import ui.LocalCustomColors
+import ui.UIHelper.InfiniteListHandler
 import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.arrow_new
 import wasmdemo.composeapp.generated.resources.audiobook
@@ -66,14 +61,14 @@ class HomeScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         var showContent by rememberSaveable() { mutableStateOf(false) }
-        var firstLoad by remember { mutableStateOf(true) }
+        var moreContent by remember() { mutableStateOf(false) }
+        var hasReachedEnd by remember() { mutableStateOf(false) }
+        var currentIndex by rememberSaveable() { mutableStateOf(1) }
         val allBooks = rememberSaveable() { mutableStateOf<List<BookContainer?>>(emptyList()) }
         val customColors = LocalCustomColors.current
         val screenModel = rememberScreenModel() { BooksViewModel() }
         val listState = rememberLazyListState()
-        val scrollState = rememberScrollState()
         val coroutineScope = rememberCoroutineScope()
-        val density = LocalDensity.current
         //animation variables
         val infiniteTransition = rememberInfiniteTransition()
         val dy by infiniteTransition.animateFloat(
@@ -97,9 +92,24 @@ class HomeScreen : Screen {
             }
         }
 
+        LaunchedEffect(screenModel.isNewBooksAdded) {
+            screenModel.isNewBooksAdded.collect { isNew ->
+                if (isNew != null) {
+                    moreContent = isNew
+                }
+            }
+        }
+        LaunchedEffect(screenModel.hasReachedEnd) {
+            screenModel.hasReachedEnd.collect { isNew ->
+                if (isNew != null) {
+                    hasReachedEnd = isNew
+                }
+            }
+        }
+
         // Main UI of the page
         LazyColumn(
-            state = listState
+            state = listState,
         ) {
             item {
                 Column(
@@ -176,11 +186,27 @@ class HomeScreen : Screen {
                 }
             }
             if (showContent) {
-                items(Strings().getBookCategories()) { category ->
-                    BookUI().categoryItem(category, allBooks.value)
+                items(currentIndex) { category ->
+                    BookUI().categoryItem(
+                        Strings().getBookCategories()[category],
+                        allBooks.value
+                    )
+                    InfiniteListHandler(listState, onLoadMore = {
+                        screenModel.loadMoreData(currentIndex)
+                    })
+                }
+            }
+            if (moreContent && !hasReachedEnd) {
+                items(currentIndex) { category ->
+                    BookUI().categoryItem(
+                        Strings().getBookCategories()[category],
+                        allBooks.value
+                    )
+                    currentIndex++
                 }
             }
         }
     }
+
 }
 
