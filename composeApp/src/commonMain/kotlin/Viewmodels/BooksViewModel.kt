@@ -17,6 +17,7 @@ class BooksViewModel() : ScreenModel {
     val allBooks: StateFlow<List<BookContainer?>> get() = allBooksStateFlow
     private val _bookStateFlow = MutableStateFlow<BookContainer?>(null)
     private val _newBooksStateFlow = MutableStateFlow<Boolean?>(false)
+    private val cachedBooks = mutableMapOf<Int, List<BookContainer?>>()
     val isNewBooksAdded: StateFlow<Boolean?> get() = _newBooksStateFlow
     private val apiService = BooksService()
     private var categories = Strings().getBookCategories()
@@ -32,22 +33,24 @@ class BooksViewModel() : ScreenModel {
         if (currentIndex < categories.size) {
             val category = categories[currentIndex]
             category.books.forEach {
-                it.id?.let { it1 -> fetchData(it1) }
+                it.id?.let { it1 -> fetchData(it1, currentIndex) }
                 count++
             }
-            println("apple ${category.books.size}")
-            if (count == category.books.size)
+            if ((currentIndex > 0 && currentIndex <= Strings().getBookCategories().size) && count == category.books.size)
                 _newBooksStateFlow.update { true }
-        } else {
+        }
+        if (currentIndex == categories.size) {
             _endReachedFlow.update { true }
         }
     }
 
-    private fun fetchData(userId: String) {
+    private fun fetchData(userId: String, currentIndex: Int) {
         screenModelScope.launch {
-            //fetch data code
-            _bookStateFlow.value = apiService.retrieveBooksFromAPI(userId)
-            _bookStateFlow.value?.let { user ->
+            val response = apiService.retrieveBooksFromAPI(userId)
+            val fetchedBooks = response?.book
+            val bookContainers = listOf(fetchedBooks?.let { BookContainer(it) })
+            cachedBooks[currentIndex] = bookContainers
+            bookContainers.forEach { user ->
                 allBooksStateFlow.update { it + user }
             }
         }
@@ -58,6 +61,12 @@ class BooksViewModel() : ScreenModel {
     }
 
     fun loadMoreData(currentIndex: Int) {
-        fetchMoreData(currentIndex)
+        println("mango load more called, $currentIndex")
+        if (cachedBooks.containsKey(currentIndex)) {
+            // Return cached data
+            allBooksStateFlow.update { it + cachedBooks[currentIndex]!! }
+        } else {
+            fetchMoreData(currentIndex)
+        }
     }
 }
