@@ -1,6 +1,7 @@
 package ui.screens
 
 import Strings
+import Viewmodels.BooksViewModel
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -45,12 +46,12 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.launch
 import models.BookContainer
-import Viewmodels.BooksViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import ui.Animations
 import ui.BookUI
 import ui.LocalCustomColors
+import ui.ScrollDirection
 import ui.UIHelper.InfiniteListHandler
 import wasmdemo.composeapp.generated.resources.Res
 import wasmdemo.composeapp.generated.resources.arrow_new
@@ -64,12 +65,20 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         var showContent by rememberSaveable() { mutableStateOf(false) }
         var moreContent by remember() { mutableStateOf(false) }
-        var hasReachedEnd by remember() { mutableStateOf(false) }
-        var currentIndex by rememberSaveable() { mutableStateOf(1) }
+        var currentIndex by remember() { mutableStateOf(1) }
         val allBooks = rememberSaveable() { mutableStateOf<List<BookContainer?>>(emptyList()) }
+        // a cachedBooks state to store the fetched data
+        var cachedBooks by rememberSaveable {
+            mutableStateOf<MutableMap<Int, List<BookContainer?>>>(
+                mutableMapOf()
+            )
+        }
         val customColors = LocalCustomColors.current
         val screenModel = rememberScreenModel() { BooksViewModel() }
         val listState = rememberLazyListState()
+        val directionalLazyListState = BookUI().rememberDirectionalLazyListState(
+            listState
+        )
         val coroutineScope = rememberCoroutineScope()
         //animation variables
         val infiniteTransition = rememberInfiniteTransition()
@@ -89,6 +98,8 @@ class HomeScreen : Screen {
                 if (screenModel.isDataLoaded()) {
                     // Update the UI here
                     showContent = true
+                    // Cache the fetched data
+                    cachedBooks[currentIndex] = books
                     allBooks.value = books
                 }
             }
@@ -98,13 +109,6 @@ class HomeScreen : Screen {
             screenModel.isNewBooksAdded.collect { isNew ->
                 if (isNew != null) {
                     moreContent = isNew
-                }
-            }
-        }
-        LaunchedEffect(screenModel.hasReachedEnd) {
-            screenModel.hasReachedEnd.collect { isNew ->
-                if (isNew != null) {
-                    hasReachedEnd = isNew
                 }
             }
         }
@@ -188,24 +192,38 @@ class HomeScreen : Screen {
                     }
                 }
             }
-            if (showContent && currentIndex<=Strings().getBookCategories().size) {
+            if (showContent && currentIndex <= Strings().getBookCategories().size) {
                 items(currentIndex) { category ->
-                    BookUI().categoryItem(
-                        Strings().getBookCategories()[category],
-                        allBooks.value
-                    )
-                    InfiniteListHandler(listState, onLoadMore = {
-                        screenModel.loadMoreData(currentIndex)
-                    })
+                    // Check if the data is already cached
+                    val cachedCategoryBooks = cachedBooks[currentIndex]
+                    if (cachedCategoryBooks != null) {
+                        // Use the cached data
+                        BookUI().categoryItem(
+                            Strings().getBookCategories()[currentIndex],
+                            cachedCategoryBooks
+                        )
+                    }
+
+                    if (directionalLazyListState.scrollDirection == ScrollDirection.Down) {
+                        InfiniteListHandler(listState, currentIndex, onLoadMore = {
+//                            println("peach showContent $it, $currentIndex")
+                            if ((it + 1) <= Strings().getBookCategories().size) {
+                                currentIndex = it + 1
+                                screenModel.loadMoreData(it + 1)
+                            }
+                        })
+                    }
                 }
             }
-            if (moreContent && !hasReachedEnd) {
-                items(currentIndex) { category ->
-                    BookUI().categoryItem(
-                        Strings().getBookCategories()[category],
-                        allBooks.value
-                    )
-                    currentIndex++
+
+            if (moreContent) {
+                if (currentIndex <= Strings().getBookCategories().size) {
+                    items(currentIndex) { category ->
+                        BookUI().categoryItem(
+                            Strings().getBookCategories()[category],
+                            allBooks.value
+                        )
+                    }
                 }
             }
         }

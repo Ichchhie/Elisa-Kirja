@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -66,6 +67,7 @@ import models.BookContainer
 import models.Books
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ui.UIHelper.DirectionalLazyListState
 import ui.UIHelper.LoadingEffect
 import ui.screens.AllBooksScreen
 import wasmdemo.composeapp.generated.resources.Res
@@ -75,12 +77,20 @@ import wasmdemo.composeapp.generated.resources.headphones
 import wasmdemo.composeapp.generated.resources.menu_book
 
 class BookUI {
+    @Composable
+    fun rememberDirectionalLazyListState(
+        lazyListState: LazyListState,
+    ): DirectionalLazyListState {
+        return remember {
+            DirectionalLazyListState(lazyListState)
+        }
+    }
+
     // UI for a single book item
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     fun bookItem(product: Books, onItemClick: (Books) -> Unit) {
         val imageUrl = "https://api.codetabs.com/v1/proxy/?quest=" + product.coverThumbnailImage
-        val customColors = LocalCustomColors.current
 
         AnimatedVisibility(
             visible = true,
@@ -191,7 +201,6 @@ class BookUI {
             androidx.compose.animation.AnimatedVisibility(
                 visible = showContent,
                 enter = fadeIn (
-//                    initialOffsetY = { it },
                     animationSpec = tween(
                         durationMillis = 500,
                         easing = LinearOutSlowInEasing,
@@ -205,7 +214,6 @@ class BookUI {
             androidx.compose.animation.AnimatedVisibility(
                 visible = showContent,
                 enter = fadeIn (
-//                    initialOffsetY = { it },
                     animationSpec = tween(
                         durationMillis = 500,
                         easing = LinearOutSlowInEasing,
