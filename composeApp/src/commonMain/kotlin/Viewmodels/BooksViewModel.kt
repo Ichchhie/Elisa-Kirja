@@ -47,7 +47,7 @@ class BooksViewModel() : ScreenModel {
     private fun fetchData(bookId: String, currentIndex: Int) {
         screenModelScope.launch {
             val response = apiService.retrieveBooksFromAPI(bookId)
-            val fetchedBooks = response?.book
+            val fetchedBooks = response?.record
             val bookContainers = listOf(fetchedBooks?.let { BookContainer(it) })
             cachedBooks[currentIndex] = bookContainers
             bookContainers.forEach { user ->
@@ -61,7 +61,6 @@ class BooksViewModel() : ScreenModel {
     }
 
     fun loadMoreData(currentIndex: Int) {
-        println("mango load more called, $currentIndex")
         if (cachedBooks.containsKey(currentIndex)) {
             // Return cached data
             allBooksStateFlow.update { it + cachedBooks[currentIndex]!! }

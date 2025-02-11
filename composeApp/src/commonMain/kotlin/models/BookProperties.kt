@@ -1,14 +1,5 @@
 package models
 
-// Author
-data class Author(
-    val id: String,
-    val sortName: String,
-    val path: String,
-    val role: String,
-    val title: String
-)
-
 //Categories
 data class BookCategory(
     val id: Int,

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BookContainer(
-    val book: Books
+    val record: Books
 )
 @Serializable
 data class AllBooksContainer(
@@ -27,24 +27,29 @@ data class Books(
     //val path: String,
     //val name: String,
     @SerialName("title")
-    var title: String? = null,
+    var title: String? = "",
     //val author: String
 
     // val price: Double,
     // val publishedTimestamp: String,
     // val description: String,
-    //val authors: List<Author>
-//    val authors: String,
+    @SerialName("authors")
+    var authors: List<Author>,
+    var authorName: String,
 //    val coverImage: String,
 //    val coverImageFull: String,
 //    val coverImageAttr: String,
-    @SerialName("coverImage")
-    var coverImage: String? = null,
 
     @SerialName("coverThumbnailImage")
-    var coverThumbnailImage: String? = null,
+    var coverThumbnailImage: String? = "",
 //    val coverMiniThumbnailImage: String,
 //    val coverImage800: String,
+)
+
+@Serializable
+data class Author(
+    @SerialName("title")
+    var title: String
 )
 
 

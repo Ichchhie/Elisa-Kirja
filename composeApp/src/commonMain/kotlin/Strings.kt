@@ -18,15 +18,15 @@ class Strings {
     fun getBooks(): List<Books> {
         val bookList = listOf(
             //Books(1, "Simple Way of Piece life", authors = listOf()),
-            Books("204131", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("207653", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("200674", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("204844", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("199704", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("204071", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("201683", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("201105", "Simple Way of Piece life", "Armor Ramsey", ""),
-            Books("204161", "Simple Way of Piece life", "Armor Ramsey", "")
+            Books("67ab0e79ad19ca34f8ff47e7", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab10b9acd3cb34a8ddc762", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab1116acd3cb34a8ddc7df", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab113eacd3cb34a8ddc821", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab119fad19ca34f8ff4c3a", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab122eacd3cb34a8ddc8d4", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab125ce41b4d34e48991c7", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab1285ad19ca34f8ff4cd2", "Simple Way of Piece life", listOf(), ""),
+            Books("67ab12b6e41b4d34e4899211", "Simple Way of Piece life", listOf(), "")
         )
         return bookList
     }

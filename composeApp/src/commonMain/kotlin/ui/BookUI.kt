@@ -243,7 +243,7 @@ class BookUI {
                             style = MaterialTheme.typography.h5
                         )
                     }
-                    Text(text = "hello", style = MaterialTheme.typography.body1)
+                    Text(text = product.authorName, style = MaterialTheme.typography.body1)
                     Row {
                         repeat(4) {
                             Icon(
@@ -336,8 +336,10 @@ class BookUI {
             ) {
                 LazyRow {
                     itemsIndexed(allBooks) { index, bookContainer ->
-                        val product = category.books[index]
-                        product.coverThumbnailImage = bookContainer?.book?.coverThumbnailImage
+                        var product = category.books[index]
+                        product.coverThumbnailImage = bookContainer?.record?.coverThumbnailImage
+                        product.title = bookContainer?.record?.title
+                        product.authorName = bookContainer?.record?.authors?.getOrNull(0)?.title ?: "Johannes Lahtela"
                         bookItem(
                             product = product,
                             onItemClick = {

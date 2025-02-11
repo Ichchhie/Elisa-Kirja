@@ -31,7 +31,10 @@ class BooksService {
         }
 
         val response = runCatching {
-            client.get("https://api.codetabs.com/v1/proxy/?quest=https://kirja.elisa.fi/api/books/$id")
+//            client.get("https://api.codetabs.com/v1/proxy/?quest=https://kirja.elisa.fi/api/books/$id")
+//                .body<BookContainer>()
+            //changing because the previous API no longer exists
+            client.get("https://api.codetabs.com/v1/proxy/?quest=https://api.jsonbin.io/v3/b/$id")
                 .body<BookContainer>()
         }
         return response.getOrNull()
