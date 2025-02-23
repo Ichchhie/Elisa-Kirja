@@ -1,5 +1,12 @@
-"This is a Kotlin Multiplatform project targeting Android, iOS, Web."
-=======
+**Project Info:**
+This is a Single Page Application built using Kotlin. The goal of this app was to test the alpha version of the latest Compose Multiplatform targeting WebAssembly(when this project was done i.e. Feb-June 2024) and document the technical challenges. Few problems encountered were also solved like this one: [open link](https://medium.com/@ichchhamoktan07/adding-ktor-to-my-kotlin-multiplatform-project-for-web-web-assembly-or-wasm-4f6adad39b73).
+
+**Tech stack used:**
+  - Jetpack Compose for UI
+  - Lazy loading for rendering books
+  - Ktor for API integration
+    
+**Code Structure:**
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
